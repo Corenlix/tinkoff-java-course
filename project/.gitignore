@@ -1,0 +1,35 @@
+# Ignore build output
+build/
+target/
+
+# Ignore IntelliJ IDEA files
+.idea/
+*.iml
+
+# Ignore Eclipse files
+.classpath
+.project
+.settings/
+
+# Ignore NetBeans files
+/nbproject/
+
+# Ignore Maven files
+log/
+*.log
+*.jar
+*.war
+*.ear
+dependency-reduced-pom.xml
+target/
+
+# Ignore Gradle files
+.gradle/
+build/
+
+# Ignore JUnit test reports
+/test-reports/
+
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db
