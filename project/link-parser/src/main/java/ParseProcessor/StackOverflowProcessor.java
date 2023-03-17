@@ -1,6 +1,5 @@
 package ParseProcessor;
 
-import ParseResponse.ParseResponse;
 import ParseResponse.StackOverflowResponse;
 import org.jetbrains.annotations.Nullable;
 
@@ -12,7 +11,7 @@ public final class StackOverflowProcessor implements ParseProcessor {
     private static final String QUESTIONS_SECTION = "questions";
 
     @Override
-    public ParseResponse parse(String link) {
+    public StackOverflowResponse parse(String link) {
         try {
             URI uri = new URI(link);
             if (!isStackOverflowDomain(uri)) {

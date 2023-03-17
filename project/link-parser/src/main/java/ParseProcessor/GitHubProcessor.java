@@ -1,6 +1,5 @@
 package ParseProcessor;
 
-import ParseResponse.ParseResponse;
 import ParseResponse.GitHubResponse;
 import org.jetbrains.annotations.Nullable;
 
@@ -11,7 +10,7 @@ public final class GitHubProcessor implements ParseProcessor {
     private static final String GITHUB_DOMAIN = "github.com";
 
     @Override
-    public ParseResponse parse(String link) {
+    public GitHubResponse parse(String link) {
         try {
             URI uri = new URI(link);
             if (!isGitHubDomain(uri)) {
