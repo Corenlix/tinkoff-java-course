@@ -28,7 +28,7 @@ public final class GitHubProcessor implements ParseProcessor {
     }
 
     @Nullable
-    private static GitHubResponse extractDataFromUri(URI uri) {
+    private GitHubResponse extractDataFromUri(URI uri) {
         String[] pathSegments = uri.getPath().split("/");
         if (pathSegments.length != 3) {
             return null;

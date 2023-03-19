@@ -29,7 +29,7 @@ public final class StackOverflowProcessor implements ParseProcessor {
     }
 
     @Nullable
-    private static StackOverflowResponse extractDataFromUri(URI uri) {
+    private StackOverflowResponse extractDataFromUri(URI uri) {
         String[] pathSegments = uri.getPath().split("/");
         if (pathSegments.length != 4 || !pathSegments[1].equals(QUESTIONS_SECTION)) {
             return null;
