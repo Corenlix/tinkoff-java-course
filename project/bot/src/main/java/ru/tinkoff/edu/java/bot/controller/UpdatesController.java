@@ -14,7 +14,6 @@ import ru.tinkoff.edu.java.bot.dto.LinkUpdate;
 @RestController
 @RequestMapping("/updates")
 public class UpdatesController {
-
     @Operation(summary = "Отправить обновление", responses = {
             @ApiResponse(responseCode = "200", description = "Обновление обработано"),
             @ApiResponse(responseCode = "400", description = "Некорректные параметры запроса", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ApiErrorResponse.class)) })})
