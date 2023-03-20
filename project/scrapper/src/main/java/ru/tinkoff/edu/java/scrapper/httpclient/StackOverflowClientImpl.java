@@ -15,14 +15,17 @@ public class StackOverflowClientImpl implements StackOverflowClient {
 
     @Override
     public StackExchangeQuestionResponse fetchQuestion(Long id) {
-        var questions = getResponse(String.format("questions/%s", id.toString()), StackExchangeQuestionsResponse.class);
+        var questions = getResponse(StackExchangeQuestionsResponse.class,
+                "questions",
+                id.toString());
         return questions.questions().get(0);
     }
 
-    private <T> T getResponse(String uri, Class<T> responseClass) {
+    private <T> T getResponse(Class<T> responseClass, String... params) {
+        String paramsString = String.join("/", params);
         return webClient
                 .get()
-                .uri(String.format("/%s/%s?site=%s", apiVersion, uri, site))
+                .uri(String.format("/%s/%s?site=%s", apiVersion, paramsString, site))
                 .retrieve()
                 .bodyToMono(responseClass)
                 .block();
