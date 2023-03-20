@@ -11,14 +11,14 @@ import ru.tinkoff.edu.java.scrapper.httpclient.StackOverflowClient;
 import ru.tinkoff.edu.java.scrapper.httpclient.StackOverflowClientImpl;
 
 @Configuration
-public class ClientConfiguration {
-    @Value("${github.api.path:https://api.github.com/}")
+public class ClientConfig {
+    @Value("${github-api.path:https://api.github.com/}")
     private String gitHubApiPath;
 
-    @Value("${stack-exchange.api.path:https://api.stackexchange.com/}")
+    @Value("${stack-exchange-api.path:https://api.stackexchange.com/}")
     private String stackExchangeApiPath;
 
-    @Value("${stack-overflow.api.version:2.3}")
+    @Value("${stack-overflow-api.version:2.3}")
     private String stackOverflowApiVersion;
 
     @Bean
