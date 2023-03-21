@@ -1,6 +1,5 @@
 package ru.tinkoff.edu.java.scrapper.configuration;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -12,33 +11,24 @@ import ru.tinkoff.edu.java.scrapper.httpclient.StackOverflowClientImpl;
 
 @Configuration
 public class ClientConfig {
-    @Value("${github-api.path:https://api.github.com/}")
-    private String gitHubApiPath;
-
-    @Value("${stack-exchange-api.path:https://api.stackexchange.com/}")
-    private String stackExchangeApiPath;
-
-    @Value("${stack-overflow-api.version:2.3}")
-    private String stackOverflowApiVersion;
-
     @Bean
-    GitHubClient gitHubClient() {
+    GitHubClient gitHubClient(ApplicationConfig applicationConfig) {
         WebClient client = WebClient.builder()
-                .baseUrl(gitHubApiPath)
+                .baseUrl(applicationConfig.githubApiPath())
                 .build();
         HttpServiceProxyFactory factory = HttpServiceProxyFactory.builder(WebClientAdapter.forClient(client)).build();
         return factory.createClient(GitHubClient.class);
     }
 
     @Bean
-    StackOverflowClient stackOverflowClient() {
+    StackOverflowClient stackOverflowClient(ApplicationConfig applicationConfig) {
         WebClient client = WebClient.builder()
-                .baseUrl(stackExchangeApiPath)
+                .baseUrl(applicationConfig.stackExchangeApiPath())
                 .build();
 
         return StackOverflowClientImpl.builder()
                 .webClient(client)
-                .apiVersion(stackOverflowApiVersion)
+                .apiVersion(applicationConfig.stackOverflowApiVersion())
                 .build();
     }
 }
