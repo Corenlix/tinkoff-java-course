@@ -6,6 +6,9 @@ import org.springframework.web.reactive.function.client.WebClient;
 import ru.tinkoff.edu.java.scrapper.dto.StackExchangeQuestionResponse;
 import ru.tinkoff.edu.java.scrapper.dto.StackExchangeQuestionsResponse;
 
+import java.util.Arrays;
+import java.util.stream.Stream;
+
 @Builder
 @RequiredArgsConstructor
 public class StackOverflowClientImpl implements StackOverflowClient {
@@ -15,17 +18,27 @@ public class StackOverflowClientImpl implements StackOverflowClient {
 
     @Override
     public StackExchangeQuestionResponse fetchQuestion(Long id) {
-        var questions = getResponse(StackExchangeQuestionsResponse.class,
-                "questions",
-                id.toString());
-        return questions.questions().get(0);
+        return fetchQuestions(id).questions().get(0);
+    }
+
+    private StackExchangeQuestionsResponse fetchQuestions(Long... ids) {
+        String[] params = Stream.concat(
+                        Stream.of("questions"),
+                        Arrays.stream(ids).map(String::valueOf))
+                .toArray(String[]::new);
+
+        return getResponse(StackExchangeQuestionsResponse.class, params);
     }
 
     private <T> T getResponse(Class<T> responseClass, String... params) {
-        String paramsString = String.join("/", params);
+
         return webClient
                 .get()
-                .uri(String.format("/%s/%s?site=%s", apiVersion, paramsString, site))
+                .uri(uriBuilder -> uriBuilder
+                        .pathSegment(apiVersion)
+                        .pathSegment(params)
+                        .queryParam("site", site)
+                        .build())
                 .retrieve()
                 .bodyToMono(responseClass)
                 .block();
