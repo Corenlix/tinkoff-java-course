@@ -1,13 +1,14 @@
-package ru.tinkoff.edu.java.scrapper.dto;
+package ru.tinkoff.edu.java.scrapper.dto.github;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.net.URI;
 import java.time.OffsetDateTime;
 
 public record GitHubRepositoryResponse(
         @JsonProperty("id") Long id,
         @JsonProperty("name") String name,
-        @JsonProperty("html_url") String url,
+        @JsonProperty("html_url") URI url,
         @JsonProperty("owner") GitHubUserResponse owner,
         @JsonProperty("language") String language,
         @JsonProperty("size") Long size,

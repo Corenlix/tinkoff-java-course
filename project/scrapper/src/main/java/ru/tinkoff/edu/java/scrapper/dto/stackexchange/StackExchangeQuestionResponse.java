@@ -1,7 +1,8 @@
-package ru.tinkoff.edu.java.scrapper.dto;
+package ru.tinkoff.edu.java.scrapper.dto.stackexchange;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.net.URI;
 import java.time.OffsetDateTime;
 import java.util.List;
 
@@ -16,7 +17,7 @@ public record StackExchangeQuestionResponse(
         @JsonProperty("last_activity_date") OffsetDateTime lastActivityDate,
         @JsonProperty("protected_date") OffsetDateTime protectedDate,
         @JsonProperty("question_id") Long questionId,
-        @JsonProperty("link") String link,
+        @JsonProperty("link") URI link,
         @JsonProperty("content_license") String contentLicense
 ) {
 }

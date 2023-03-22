@@ -6,6 +6,10 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.web.bind.annotation.*;
 import ru.tinkoff.edu.java.scrapper.dto.*;
+import ru.tinkoff.edu.java.scrapper.dto.links.LinkResponse;
+import ru.tinkoff.edu.java.scrapper.dto.links.ListLinksResponse;
+import ru.tinkoff.edu.java.scrapper.dto.links.RemoveLinkRequest;
+import ru.tinkoff.edu.java.scrapper.dto.tgchat.AddLinkRequest;
 
 import java.util.Collections;
 
