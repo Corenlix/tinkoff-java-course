@@ -1,4 +1,4 @@
-package ru.tinkoff.edu.java.bot.exception.handler;
+package ru.tinkoff.edu.java.bot.controller.exceptionhandler;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -11,7 +11,7 @@ import ru.tinkoff.edu.java.bot.dto.ApiErrorResponse;
 
 
 @RestControllerAdvice
-public class ExceptionHandlerControllerAdvice {
+public class CommonExceptionHandler {
 
     @ExceptionHandler(value = {
             MethodArgumentTypeMismatchException.class,
