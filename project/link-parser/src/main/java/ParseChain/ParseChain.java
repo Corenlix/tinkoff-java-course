@@ -3,6 +3,7 @@ package ParseChain;
 import ParseProcessor.ParseProcessor;
 import ParseResponse.ParseResponse;
 
+import java.net.URI;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -13,7 +14,7 @@ public final class ParseChain {
         processors.add(parseProcessor);
     }
 
-    public ParseResponse parse(String link) {
+    public ParseResponse parse(URI link) {
         for (ParseProcessor processor : processors) {
             ParseResponse result = processor.parse(link);
             if (result != null) {
