@@ -17,7 +17,7 @@ public final class GitHubProcessor implements ParseProcessor {
         return extractDataFromUri(link);
     }
 
-    private static boolean isGitHubDomain(URI link) {
+    private boolean isGitHubDomain(URI link) {
         return link.getAuthority().equals(GITHUB_DOMAIN);
     }
 

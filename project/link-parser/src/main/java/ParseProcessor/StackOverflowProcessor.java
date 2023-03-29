@@ -18,7 +18,7 @@ public final class StackOverflowProcessor implements ParseProcessor {
         return extractDataFromUri(link);
     }
 
-    private static boolean isStackOverflowDomain(URI link) {
+    private boolean isStackOverflowDomain(URI link) {
         return link.getAuthority().equals(STACKOVERFLOW_DOMAIN);
     }
 
