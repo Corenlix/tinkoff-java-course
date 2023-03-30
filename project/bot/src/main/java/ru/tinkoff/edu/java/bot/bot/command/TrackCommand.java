@@ -1,19 +1,19 @@
-package ru.tinkoff.edu.java.bot.command;
+package ru.tinkoff.edu.java.bot.bot.command;
 
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.SendMessage;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UntrackCommand implements Command{
+public class TrackCommand implements Command {
     @Override
     public String name() {
-        return "/untrack";
+        return "/track";
     }
 
     @Override
     public String description() {
-        return "Прекратить отслеживание посылки";
+        return "Начать отслеживание ссылки";
     }
 
     @Override

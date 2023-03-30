@@ -1,23 +1,24 @@
-package ru.tinkoff.edu.java.bot.command;
+package ru.tinkoff.edu.java.bot.bot.command;
 
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.SendMessage;
 import org.springframework.stereotype.Component;
 
+
 @Component
-public class ListCommand implements Command {
+public class StartCommand implements Command {
     @Override
     public String name() {
-        return "/list";
+        return "/start";
     }
 
     @Override
     public String description() {
-        return "Показать список отслеживаемых ссылок";
+        return "Регистрация пользователя";
     }
 
     @Override
     public SendMessage process(Update update) {
-        return new SendMessage(update.message().chat().id(), "Ничего не отслеживается");
+        return new SendMessage(update.message().chat().id(), "Пока не работает :с");
     }
 }

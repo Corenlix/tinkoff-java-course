@@ -1,11 +1,13 @@
-package ru.tinkoff.edu.java.bot;
+package ru.tinkoff.edu.java.bot.bot;
 
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.model.BotCommand;
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.SetMyCommands;
 import org.springframework.stereotype.Service;
-import ru.tinkoff.edu.java.bot.command.Command;
+import ru.tinkoff.edu.java.bot.bot.Bot.command.Command;
+import ru.tinkoff.edu.java.bot.bot.command.Command;
+import ru.tinkoff.edu.java.bot.bot.updateprocessor.UpdateProcessor;
 
 import java.util.List;
 
