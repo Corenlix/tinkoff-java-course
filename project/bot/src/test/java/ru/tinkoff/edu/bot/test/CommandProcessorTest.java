@@ -5,9 +5,7 @@ import com.pengrad.telegrambot.model.Message;
 import com.pengrad.telegrambot.model.Update;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.test.util.ReflectionTestUtils;
 import ru.tinkoff.edu.java.bot.bot.updateprocessor.command.StartCommand;
 import ru.tinkoff.edu.java.bot.bot.updateprocessor.command.replycommand.TrackCommand;
 import ru.tinkoff.edu.java.bot.bot.updateprocessor.commandprocessor.CommandProcessor;
@@ -15,18 +13,9 @@ import ru.tinkoff.edu.java.bot.bot.updateprocessor.commandprocessor.CommandProce
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.when;
 
-@ExtendWith(MockitoExtension.class)
 public class CommandProcessorTest {
     private CommandProcessor commandProcessor;
-
-    @Mock
-    Update update;
-    @Mock
-    Message message;
-    @Mock
-    Chat chat;
 
     @BeforeEach
     void setup() {
@@ -37,11 +26,13 @@ public class CommandProcessorTest {
     @Test
     void whenUnknownCommand_thenReturnUnknownCommandMessage() {
         //given
-        when(update.message()).thenReturn(message);
-        when(message.text()).thenReturn("/nichego");
-        when(message.chat()).thenReturn(chat);
-        when(chat.id()).thenReturn(1L);
-
+        var update = new Update();
+        var message = new Message();
+        var chat = new Chat();
+        ReflectionTestUtils.setField(update, "message", message);
+        ReflectionTestUtils.setField(message, "chat", chat);
+        ReflectionTestUtils.setField(message, "text", "/nichego");
+        ReflectionTestUtils.setField(chat, "id", 1L);
 
         //when
         var processResponse = commandProcessor.tryProcess(update);
