@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.test.util.ReflectionTestUtils;
 import ru.tinkoff.edu.java.bot.bot.updateprocessor.command.ListCommand;
 import ru.tinkoff.edu.java.bot.dto.scrapper.LinkResponse;
 import ru.tinkoff.edu.java.bot.dto.scrapper.ListLinksResponse;
@@ -23,22 +24,18 @@ import static org.mockito.Mockito.*;
 public class CommandsTest {
     @Mock
     ScrapperClient scrapperClient;
-    @Mock
-    Update update;
-    @Mock
-    Message message;
-    @Mock
-    Chat chat;
 
     @Test
     void listCommandWhenEmpty_shouldReturnSpecialMessageTest() {
         //given
         var command = new ListCommand(scrapperClient);
-
-        when(update.message()).thenReturn(message);
-        when(message.chat()).thenReturn(chat);
+        var update = new Update();
+        var message = new Message();
+        var chat = new Chat();
+        ReflectionTestUtils.setField(update, "message", message);
+        ReflectionTestUtils.setField(message, "chat", chat);
+        ReflectionTestUtils.setField(chat, "id", 1L);
         when(scrapperClient.getAllLinks(any())).thenReturn(new ListLinksResponse(null, 0));
-        when(chat.id()).thenReturn(1L);
 
         //when
         var processResponse = command.process(update);
@@ -56,10 +53,13 @@ public class CommandsTest {
         var link2 = new LinkResponse(2L, URI.create("https://test.com"));
         var linksResponse = new ListLinksResponse(List.of(link, link2), 2);
 
-        when(update.message()).thenReturn(message);
-        when(message.chat()).thenReturn(chat);
+        var update = new Update();
+        var message = new Message();
+        var chat = new Chat();
+        ReflectionTestUtils.setField(update, "message", message);
+        ReflectionTestUtils.setField(message, "chat", chat);
+        ReflectionTestUtils.setField(chat, "id", 1L);
         when(scrapperClient.getAllLinks(any())).thenReturn(linksResponse);
-        when(chat.id()).thenReturn(1L);
 
         //when
         var processResponse = command.process(update);

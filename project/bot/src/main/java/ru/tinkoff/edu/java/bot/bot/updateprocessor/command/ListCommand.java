@@ -29,7 +29,7 @@ public class ListCommand implements Command {
             return new SendMessage(update.message().chat().id(), "Ничего не отслеживается! Используй /track, чтобы добавить ссылки");
         } else {
             String[] links = response.items().stream().map(linkResponse -> linkResponse.url().toString()).toArray(String[]::new);
-            return new SendMessage(update.message().chat().id(), String.join("/n", links));
+            return new SendMessage(update.message().chat().id(), String.join("\n", links));
         }
     }
 }

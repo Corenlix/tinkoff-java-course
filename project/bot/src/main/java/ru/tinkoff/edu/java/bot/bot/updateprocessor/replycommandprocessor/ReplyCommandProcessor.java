@@ -16,6 +16,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ReplyCommandProcessor implements UpdateProcessor {
     private final List<ReplyCommand> replyCommands;
+
     @Override
     public Optional<SendMessage> tryProcess(Update update) {
         if (!isReply(update))
