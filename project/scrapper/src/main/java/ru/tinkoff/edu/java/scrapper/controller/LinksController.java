@@ -10,6 +10,7 @@ import ru.tinkoff.edu.java.scrapper.dto.links.LinkResponse;
 import ru.tinkoff.edu.java.scrapper.dto.links.ListLinksResponse;
 import ru.tinkoff.edu.java.scrapper.dto.links.RemoveLinkRequest;
 import ru.tinkoff.edu.java.scrapper.dto.tgchat.AddLinkRequest;
+import ru.tinkoff.edu.java.scrapper.exception.LinkNotFoundException;
 
 import java.util.Collections;
 
@@ -40,6 +41,7 @@ public class LinksController {
             @ApiResponse(responseCode = "404", description = "Ссылка не найдена", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ApiErrorResponse.class))})})
     @DeleteMapping
     public LinkResponse removeLink(@RequestHeader(value="Tg-Chat-Id") Long tgChatId, @RequestBody RemoveLinkRequest request) {
-        return new LinkResponse(0L, request.link());
+        throw new LinkNotFoundException(request.link());
+
     }
 }

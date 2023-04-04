@@ -13,9 +13,15 @@
         <maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
         <jetbrains-annotations.version>23.1.0</jetbrains-annotations.version>
         <openapi-webmvc-ui-version>2.0.2</openapi-webmvc-ui-version>
+        <telegram-api-version>6.5.0</telegram-api-version>
     </properties>
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>com.github.pengrad</groupId>
+                <artifactId>java-telegram-bot-api</artifactId>
+                <version>${telegram-api-version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
