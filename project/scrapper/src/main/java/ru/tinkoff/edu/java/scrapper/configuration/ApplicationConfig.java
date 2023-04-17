@@ -12,5 +12,6 @@ import java.time.Duration;
 public record ApplicationConfig(@NotNull URI githubApiPath,
                                 @NotNull URI stackExchangeApiPath,
                                 @NotNull String stackOverflowApiVersion,
-                                @NotNull Duration schedulerInterval) {
+                                @NotNull Duration schedulerInterval,
+                                @NotNull URI tgBotPath) {
 }

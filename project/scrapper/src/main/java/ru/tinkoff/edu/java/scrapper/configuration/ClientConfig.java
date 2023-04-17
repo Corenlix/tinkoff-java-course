@@ -8,6 +8,7 @@ import org.springframework.web.service.invoker.HttpServiceProxyFactory;
 import ru.tinkoff.edu.java.scrapper.httpclient.GitHubClient;
 import ru.tinkoff.edu.java.scrapper.httpclient.StackOverflowClient;
 import ru.tinkoff.edu.java.scrapper.httpclient.StackOverflowClientImpl;
+import ru.tinkoff.edu.java.scrapper.httpclient.TgBotClient;
 
 @Configuration
 public class ClientConfig {
@@ -30,5 +31,14 @@ public class ClientConfig {
                 .webClient(client)
                 .apiVersion(applicationConfig.stackOverflowApiVersion())
                 .build();
+    }
+
+    @Bean
+    TgBotClient tgBotClient(ApplicationConfig applicationConfig) {
+        WebClient client = WebClient.builder()
+                .baseUrl(applicationConfig.tgBotPath().toString())
+                .build();
+        HttpServiceProxyFactory factory = HttpServiceProxyFactory.builder(WebClientAdapter.forClient(client)).build();
+        return factory.createClient(TgBotClient.class);
     }
 }
