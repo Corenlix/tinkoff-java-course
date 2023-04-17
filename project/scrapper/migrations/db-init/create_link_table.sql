@@ -1,6 +1,6 @@
-create table if not exists link
+CREATE TABLE IF NOT EXISTS link
 (
-    id  bigint primary key,
-    url text not null,
-    updated_at timestamp default now() not null
+    id BIGINT PRIMARY KEY,
+    url TEXT NOT NULL,
+    updated_at TIMESTAMP DEFAULT now() NOT NULL
 );

@@ -1,0 +1,13 @@
+ALTER TABLE subscription
+DROP CONSTRAINT fk_chat,
+ADD CONSTRAINT fk_subscription_chat
+FOREIGN KEY (chat_id) REFERENCES chat(id)
+ON DELETE CASCADE
+ON UPDATE RESTRICT;
+
+ALTER TABLE subscription
+DROP CONSTRAINT fk_link,
+ADD CONSTRAINT fk_subscription_link
+FOREIGN KEY (link_id) REFERENCES link(id)
+ON DELETE RESTRICT
+ON UPDATE RESTRICT;

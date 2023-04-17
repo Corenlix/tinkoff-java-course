@@ -1,16 +1,19 @@
-package environment;
+package ru.tinkoff.edu.java.scrapper.environment;
 
 import liquibase.Liquibase;
 import liquibase.database.Database;
 import liquibase.database.DatabaseFactory;
-import liquibase.database.core.PostgresDatabase;
 import liquibase.database.jvm.JdbcConnection;
 import liquibase.exception.LiquibaseException;
 import liquibase.resource.DirectoryResourceAccessor;
 import liquibase.resource.ResourceAccessor;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
+import javax.sql.DataSource;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.nio.file.Path;
@@ -52,5 +55,13 @@ public abstract class IntegrationEnvironment {
                 PSQL_CONTAINER.getUsername(),
                 PSQL_CONTAINER.getPassword()
         );
+    }
+
+    @DynamicPropertySource
+    static void jdbcProperties(DynamicPropertyRegistry registry) {
+        registry.add("spring.datasource.url", PSQL_CONTAINER::getJdbcUrl);
+        registry.add("spring.datasource.username", PSQL_CONTAINER::getUsername);
+        registry.add("spring.datasource.password", PSQL_CONTAINER::getPassword);
+        registry.add("spring.liquibase.enabled", () -> false);
     }
 }

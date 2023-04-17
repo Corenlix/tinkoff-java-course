@@ -1,4 +1,6 @@
-import environment.IntegrationEnvironment;
+package ru.tinkoff.edu.java.scrapper;
+
+import ru.tinkoff.edu.java.scrapper.environment.IntegrationEnvironment;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 
@@ -29,7 +31,7 @@ public class MigrationsTest extends IntegrationEnvironment {
         ResultSet result = statement.executeQuery(GET_ALL_TABLES_QUERY);
 
         //then
-        List<String> tablesShouldExist = List.of("link", "chat", "chat_link", "databasechangelog", "databasechangeloglock");
+        List<String> tablesShouldExist = List.of("link", "chat", "subscription", "databasechangelog", "databasechangeloglock");
         assertThat(getTableNames(result)).containsAll(tablesShouldExist);
     }
 

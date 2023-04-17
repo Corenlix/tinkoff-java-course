@@ -10,4 +10,9 @@
     <include file="db-init/create_chat_table.sql" relativeToChangelogFile="true"/>
     <include file="db-init/create_link_table.sql" relativeToChangelogFile="true"/>
     <include file="db-init/create_chat-link_table.sql" relativeToChangelogFile="true"/>
+    <include file="db-init/rename_chat-link_table_to_subscription_table.sql" relativeToChangelogFile="true"/>
+    <include file="db-init/add_cascade_to_subscription_table.sql" relativeToChangelogFile="true"/>
+    <include file="db-init/create_link_id_sequence.sql" relativeToChangelogFile="true"/>
+    <include file="db-init/add_unique_constraint_and_index_to_link_url.sql" relativeToChangelogFile="true"/>
+    <include file="db-init/add_field_content_json_into_link.sql" relativeToChangelogFile="true"/>
 </databaseChangeLog>
