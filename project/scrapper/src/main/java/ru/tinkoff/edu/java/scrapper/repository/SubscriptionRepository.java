@@ -5,7 +5,7 @@ import org.springframework.jdbc.core.DataClassRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
-import ru.tinkoff.edu.java.scrapper.dto.SubscriptionDto;
+import ru.tinkoff.edu.java.scrapper.model.SubscriptionEntity;
 import ru.tinkoff.edu.java.scrapper.exception.SubscriptionNotFoundException;
 
 import java.util.List;
@@ -14,7 +14,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SubscriptionRepository {
     private final JdbcTemplate jdbcTemplate;
-    private final RowMapper<SubscriptionDto> mapper = new DataClassRowMapper<>(SubscriptionDto.class);
+    private final RowMapper<SubscriptionEntity> mapper = new DataClassRowMapper<>(SubscriptionEntity.class);
 
     private final static String ADD_QUERY = "insert into subscription (chat_id, link_id) values (?, ?)";
     private final static String FIND_ALL_QUERY = "select chat_id, link_id from subscription";
@@ -25,7 +25,7 @@ public class SubscriptionRepository {
         jdbcTemplate.update(ADD_QUERY, chatId, linkId);
     }
 
-    public List<SubscriptionDto> findAll() {
+    public List<SubscriptionEntity> findAll() {
         return jdbcTemplate.query(FIND_ALL_QUERY, mapper);
     }
 

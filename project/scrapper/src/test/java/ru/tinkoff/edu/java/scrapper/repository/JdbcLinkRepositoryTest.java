@@ -10,7 +10,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
-import ru.tinkoff.edu.java.scrapper.dto.LinkDto;
+import ru.tinkoff.edu.java.scrapper.model.LinkEntity;
 import ru.tinkoff.edu.java.scrapper.environment.IntegrationEnvironment;
 
 import java.sql.PreparedStatement;
@@ -35,9 +35,9 @@ public class JdbcLinkRepositoryTest extends IntegrationEnvironment {
         // given
 
         // when
-        List<LinkDto> allBefore = getAll();
+        List<LinkEntity> allBefore = getAll();
         linkRepository.add(TEST_URL);
-        List<LinkDto> allAfter = getAll();
+        List<LinkEntity> allAfter = getAll();
 
         // then
         assertThat(allBefore).hasSize(0);
@@ -64,7 +64,7 @@ public class JdbcLinkRepositoryTest extends IntegrationEnvironment {
         // given
 
         // when
-        List<LinkDto> all = linkRepository.findAll();
+        List<LinkEntity> all = linkRepository.findAll();
 
         // then
         assertThat(all).hasSize(0);
@@ -78,7 +78,7 @@ public class JdbcLinkRepositoryTest extends IntegrationEnvironment {
         addLink(TEST_URL);
 
         // when
-        List<LinkDto> all = linkRepository.findAll();
+        List<LinkEntity> all = linkRepository.findAll();
 
         // then
         assertThat(all).hasSize(1);
@@ -92,9 +92,9 @@ public class JdbcLinkRepositoryTest extends IntegrationEnvironment {
         addLink(TEST_URL);
 
         // when
-        List<LinkDto> allBefore = getAll();
+        List<LinkEntity> allBefore = getAll();
         linkRepository.remove(TEST_URL);
-        List<LinkDto> allAfter = getAll();
+        List<LinkEntity> allAfter = getAll();
 
         // then
         assertThat(allBefore).hasSize(1);
@@ -108,17 +108,17 @@ public class JdbcLinkRepositoryTest extends IntegrationEnvironment {
         // given
 
         // when
-        List<LinkDto> allBefore = getAll();
+        List<LinkEntity> allBefore = getAll();
         linkRepository.remove(TEST_URL);
-        List<LinkDto> allAfter = getAll();
+        List<LinkEntity> allAfter = getAll();
 
         // then
         assertThat(allBefore).hasSize(0);
         assertThat(allAfter).hasSize(0);
     }
 
-    private List<LinkDto> getAll() {
-        return jdbcTemplate.query("select id, url from link", new BeanPropertyRowMapper<>(LinkDto.class));
+    private List<LinkEntity> getAll() {
+        return jdbcTemplate.query("select id, url from link", new BeanPropertyRowMapper<>(LinkEntity.class));
     }
 
     private Long addLink(String url) {

@@ -10,9 +10,8 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
-import ru.tinkoff.edu.java.scrapper.dto.SubscriptionDto;
+import ru.tinkoff.edu.java.scrapper.model.SubscriptionEntity;
 import ru.tinkoff.edu.java.scrapper.environment.IntegrationEnvironment;
-import ru.tinkoff.edu.java.scrapper.service.ChatService;
 
 import java.sql.PreparedStatement;
 import java.util.List;
@@ -39,9 +38,9 @@ public class JdbcSubscriptionRepositoryTest extends IntegrationEnvironment {
         createChat(chatId);
 
         // when
-        List<SubscriptionDto> allBefore = getAll();
+        List<SubscriptionEntity> allBefore = getAll();
         subscriptionRepository.add(chatId, linkId);
-        List<SubscriptionDto> allAfter = getAll();
+        List<SubscriptionEntity> allAfter = getAll();
 
         // then
         assertThat(allBefore).hasSize(0);
@@ -71,7 +70,7 @@ public class JdbcSubscriptionRepositoryTest extends IntegrationEnvironment {
         // given
 
         // when
-        List<SubscriptionDto> all = subscriptionRepository.findAll();
+        List<SubscriptionEntity> all = subscriptionRepository.findAll();
 
         // then
         assertThat(all).hasSize(0);
@@ -88,7 +87,7 @@ public class JdbcSubscriptionRepositoryTest extends IntegrationEnvironment {
         createSubscription(chatId, linkId);
 
         // when
-        List<SubscriptionDto> all = subscriptionRepository.findAll();
+        List<SubscriptionEntity> all = subscriptionRepository.findAll();
 
         // then
         assertThat(all).hasSize(1);
@@ -105,9 +104,9 @@ public class JdbcSubscriptionRepositoryTest extends IntegrationEnvironment {
         createSubscription(chatId, linkId);
 
         // when
-        List<SubscriptionDto> allBefore = getAll();
+        List<SubscriptionEntity> allBefore = getAll();
         subscriptionRepository.remove(chatId, linkId);
-        List<SubscriptionDto> allAfter = getAll();
+        List<SubscriptionEntity> allAfter = getAll();
 
         // then
         assertThat(allBefore).hasSize(1);
@@ -125,9 +124,9 @@ public class JdbcSubscriptionRepositoryTest extends IntegrationEnvironment {
         createSubscription(chatId, linkId);
 
         // when
-        List<SubscriptionDto> allBefore = getAll();
+        List<SubscriptionEntity> allBefore = getAll();
         removeChat(chatId);
-        List<SubscriptionDto> allAfter = getAll();
+        List<SubscriptionEntity> allAfter = getAll();
 
         // then
         assertThat(allBefore).hasSize(1);
@@ -146,17 +145,17 @@ public class JdbcSubscriptionRepositoryTest extends IntegrationEnvironment {
         createSubscription(2L, createdLinkId);
 
         // when
-        List<SubscriptionDto> allBefore = getAll();
+        List<SubscriptionEntity> allBefore = getAll();
         subscriptionRepository.remove(chatId, linkId);
-        List<SubscriptionDto> allAfter = getAll();
+        List<SubscriptionEntity> allAfter = getAll();
 
         // then
         assertThat(allBefore).hasSize(1);
         assertThat(allAfter).hasSize(1);
     }
 
-    private List<SubscriptionDto> getAll() {
-        return jdbcTemplate.query("select chat_id, link_id from subscription", new BeanPropertyRowMapper<>(SubscriptionDto.class));
+    private List<SubscriptionEntity> getAll() {
+        return jdbcTemplate.query("select chat_id, link_id from subscription", new BeanPropertyRowMapper<>(SubscriptionEntity.class));
     }
 
     private Long createLink(String url) {

@@ -1,4 +1,4 @@
-package ru.tinkoff.edu.java.scrapper.dto.tgBot;
+package ru.tinkoff.edu.java.scrapper.dto.client.tgBot;
 
 import java.util.List;
 

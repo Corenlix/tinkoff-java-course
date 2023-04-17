@@ -4,8 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.tinkoff.edu.java.scrapper.dto.ChatDto;
-import ru.tinkoff.edu.java.scrapper.dto.LinkDto;
+import ru.tinkoff.edu.java.scrapper.model.ChatEntity;
+import ru.tinkoff.edu.java.scrapper.model.LinkEntity;
 import ru.tinkoff.edu.java.scrapper.repository.JdbcChatRepository;
 import ru.tinkoff.edu.java.scrapper.repository.JdbcLinkRepository;
 import ru.tinkoff.edu.java.scrapper.repository.SubscriptionRepository;
@@ -24,11 +24,11 @@ public class JdbcSubscriptionService implements SubscriptionService {
 
     @Override
     @Transactional
-    public LinkDto subscribe(Long chatId, URI url) {
+    public LinkEntity subscribe(Long chatId, URI url) {
         try {
-            LinkDto linkDto = linkRepository.find(url.toString());
-            subscriptionRepository.add(chatId, linkDto.id());
-            return linkDto;
+            LinkEntity linkEntity = linkRepository.find(url.toString());
+            subscriptionRepository.add(chatId, linkEntity.id());
+            return linkEntity;
         } catch (EmptyResultDataAccessException exception) {
             Long linkId = linkRepository.add(url.toString());
             subscriptionRepository.add(chatId, linkId);
@@ -38,23 +38,23 @@ public class JdbcSubscriptionService implements SubscriptionService {
 
     @Override
     @Transactional
-    public LinkDto unsubscribe(Long chatId, URI url) {
-        LinkDto linkDto = linkRepository.find(url.toString());
-        subscriptionRepository.remove(chatId, linkDto.id());
-        Integer subscriptions = subscriptionRepository.countByLinkId(linkDto.id());
+    public LinkEntity unsubscribe(Long chatId, URI url) {
+        LinkEntity linkEntity = linkRepository.find(url.toString());
+        subscriptionRepository.remove(chatId, linkEntity.id());
+        Integer subscriptions = subscriptionRepository.countByLinkId(linkEntity.id());
         if (subscriptions == 0) {
-            linkRepository.removeById(linkDto.id());
+            linkRepository.removeById(linkEntity.id());
         }
-        return linkDto;
+        return linkEntity;
     }
 
     @Override
-    public List<LinkDto> findLinksByChatId(Long chatId) {
+    public List<LinkEntity> findLinksByChatId(Long chatId) {
         return linkRepository.findByChatId(chatId);
     }
 
     @Override
-    public List<ChatDto> findChatsByLinkId(Long linkId) {
+    public List<ChatEntity> findChatsByLinkId(Long linkId) {
         return chatRepository.findByLinkId(linkId);
     }
 }

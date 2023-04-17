@@ -9,7 +9,7 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
-import ru.tinkoff.edu.java.scrapper.dto.ChatDto;
+import ru.tinkoff.edu.java.scrapper.model.ChatEntity;
 import ru.tinkoff.edu.java.scrapper.environment.IntegrationEnvironment;
 
 import java.util.List;
@@ -34,11 +34,11 @@ public class JdbcChatRepositoryTest extends IntegrationEnvironment {
 
         // when
         chatRepository.add(id);
-        List<ChatDto> all = findAll();
+        List<ChatEntity> all = findAll();
 
         // then
         assertThat(all).hasSize(1);
-        assertThat(all.get(0).getId()).isEqualTo(id);
+        assertThat(all.get(0).id()).isEqualTo(id);
     }
 
     @Test
@@ -64,9 +64,9 @@ public class JdbcChatRepositoryTest extends IntegrationEnvironment {
         create(id);
 
         // when
-        List<ChatDto> allBeforeRemove = findAll();
+        List<ChatEntity> allBeforeRemove = findAll();
         chatRepository.removeById(id);
-        List<ChatDto> all = findAll();
+        List<ChatEntity> all = findAll();
 
         // then
         assertThat(allBeforeRemove).hasSize(1);
@@ -84,7 +84,7 @@ public class JdbcChatRepositoryTest extends IntegrationEnvironment {
 
         // when
         chatRepository.removeById(notExistId);
-        List<ChatDto> all = findAll();
+        List<ChatEntity> all = findAll();
 
         // then
         assertThat(all).hasSize(1);
@@ -97,7 +97,7 @@ public class JdbcChatRepositoryTest extends IntegrationEnvironment {
         // given
 
         // when
-        List<ChatDto> all = chatRepository.findAll();
+        List<ChatEntity> all = chatRepository.findAll();
 
         // then
         assertThat(all).hasSize(0);
@@ -112,14 +112,14 @@ public class JdbcChatRepositoryTest extends IntegrationEnvironment {
         create(id);
 
         // when
-        List<ChatDto> all = chatRepository.findAll();
+        List<ChatEntity> all = chatRepository.findAll();
 
         // then
         assertThat(all).hasSize(1);
     }
 
-    private List<ChatDto> findAll() {
-        return jdbcTemplate.query("select id from chat", new BeanPropertyRowMapper<>(ChatDto.class));
+    private List<ChatEntity> findAll() {
+        return jdbcTemplate.query("select id from chat", new BeanPropertyRowMapper<>(ChatEntity.class));
     }
 
     private void create(Long id) {

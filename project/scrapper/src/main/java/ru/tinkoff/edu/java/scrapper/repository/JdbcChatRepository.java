@@ -5,7 +5,7 @@ import org.springframework.jdbc.core.DataClassRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
-import ru.tinkoff.edu.java.scrapper.dto.ChatDto;
+import ru.tinkoff.edu.java.scrapper.model.ChatEntity;
 import ru.tinkoff.edu.java.scrapper.exception.ChatNotFoundException;
 
 import java.util.List;
@@ -14,7 +14,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class JdbcChatRepository {
     private final JdbcTemplate jdbcTemplate;
-    private final RowMapper<ChatDto> rowMapper = new DataClassRowMapper<>(ChatDto.class);
+    private final RowMapper<ChatEntity> rowMapper = new DataClassRowMapper<>(ChatEntity.class);
 
     private final static String ADD_QUERY = "insert into chat (id) values (?)";
     private final static String REMOVE_BY_ID_QUERY = "delete from chat where id = ?";
@@ -26,7 +26,7 @@ public class JdbcChatRepository {
             where link_id = ?
             """;
 
-    public List<ChatDto> findAll() {
+    public List<ChatEntity> findAll() {
         return jdbcTemplate.query(FIND_ALL_QUERY, rowMapper);
     }
 
@@ -41,7 +41,7 @@ public class JdbcChatRepository {
         }
     }
 
-    public List<ChatDto> findByLinkId(Long linkId) {
+    public List<ChatEntity> findByLinkId(Long linkId) {
         return jdbcTemplate.query(FIND_BY_LINK_ID_QUERY, rowMapper, linkId);
     }
 }

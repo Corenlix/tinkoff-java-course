@@ -1,4 +1,4 @@
-package ru.tinkoff.edu.java.scrapper.dto.tgchat;
+package ru.tinkoff.edu.java.scrapper.dto.controller.tgchat;
 
 
 import java.net.URI;

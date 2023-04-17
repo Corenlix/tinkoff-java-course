@@ -1,4 +1,4 @@
-package ru.tinkoff.edu.java.scrapper.dto.links;
+package ru.tinkoff.edu.java.scrapper.dto.controller.links;
 
 import java.util.List;
 
