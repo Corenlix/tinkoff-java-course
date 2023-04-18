@@ -1,4 +1,4 @@
-package ru.tinkoff.edu.java.scrapper.linkhandler;
+package ru.tinkoff.edu.java.scrapper.service.linkupdater.linkhandler.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -9,7 +9,8 @@ import parseresponse.ParseResponse;
 import ru.tinkoff.edu.java.scrapper.dto.UpdateMessage;
 import ru.tinkoff.edu.java.scrapper.dto.client.github.GitHubRepositoryResponse;
 import ru.tinkoff.edu.java.scrapper.httpclient.GitHubClient;
-import ru.tinkoff.edu.java.scrapper.linkupdatechecker.github.GithubLinksUpdateChecker;
+import ru.tinkoff.edu.java.scrapper.service.linkupdater.linkhandler.LinkHandler;
+import ru.tinkoff.edu.java.scrapper.service.linkupdater.linkhandler.impl.linkupdatechecker.github.GithubLinksUpdateChecker;
 import ru.tinkoff.edu.java.scrapper.model.linkcontent.GithubContent;
 import ru.tinkoff.edu.java.scrapper.model.linkcontent.LinkContent;
 
@@ -20,7 +21,7 @@ import java.util.stream.Collectors;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class GithubLinkHandler implements LinkHandler{
+public class GithubLinkHandler implements LinkHandler {
     private final GitHubClient gitHubClient;
     private final List<GithubLinksUpdateChecker> updateCheckers;
 

@@ -1,4 +1,4 @@
-package ru.tinkoff.edu.java.scrapper.service;
+package ru.tinkoff.edu.java.scrapper.service.linkupdater;
 
 import linkparser.LinkParser;
 import lombok.RequiredArgsConstructor;
@@ -7,8 +7,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import parseresponse.ParseResponse;
 import ru.tinkoff.edu.java.scrapper.dto.UpdateMessage;
-import ru.tinkoff.edu.java.scrapper.linkhandler.LinkHandler;
-import ru.tinkoff.edu.java.scrapper.linkhandler.LinkHandlerChain;
+import ru.tinkoff.edu.java.scrapper.service.LinkUpdater;
+import ru.tinkoff.edu.java.scrapper.service.UpdateMessagesSender;
+import ru.tinkoff.edu.java.scrapper.service.linkupdater.linkhandler.LinkHandler;
+import ru.tinkoff.edu.java.scrapper.service.linkupdater.linkhandler.LinkHandlerChain;
 import ru.tinkoff.edu.java.scrapper.model.LinkEntity;
 import ru.tinkoff.edu.java.scrapper.model.linkcontent.LinkContent;
 

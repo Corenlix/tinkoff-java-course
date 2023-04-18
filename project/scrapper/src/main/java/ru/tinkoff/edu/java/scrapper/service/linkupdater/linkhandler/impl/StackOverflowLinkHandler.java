@@ -1,4 +1,4 @@
-package ru.tinkoff.edu.java.scrapper.linkhandler;
+package ru.tinkoff.edu.java.scrapper.service.linkupdater.linkhandler.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -8,7 +8,8 @@ import parseresponse.StackOverflowResponse;
 import ru.tinkoff.edu.java.scrapper.dto.UpdateMessage;
 import ru.tinkoff.edu.java.scrapper.dto.client.stackexchange.StackExchangeQuestionResponse;
 import ru.tinkoff.edu.java.scrapper.httpclient.StackOverflowClient;
-import ru.tinkoff.edu.java.scrapper.linkupdatechecker.stackoverflow.StackOverflowUpdateChecker;
+import ru.tinkoff.edu.java.scrapper.service.linkupdater.linkhandler.LinkHandler;
+import ru.tinkoff.edu.java.scrapper.service.linkupdater.linkhandler.impl.linkupdatechecker.stackoverflow.StackOverflowUpdateChecker;
 import ru.tinkoff.edu.java.scrapper.model.linkcontent.LinkContent;
 import ru.tinkoff.edu.java.scrapper.model.linkcontent.StackoverflowContent;
 

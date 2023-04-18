@@ -1,4 +1,4 @@
-package ru.tinkoff.edu.java.scrapper.linkhandler;
+package ru.tinkoff.edu.java.scrapper.service.linkupdater.linkhandler;
 
 import parseresponse.ParseResponse;
 import ru.tinkoff.edu.java.scrapper.dto.UpdateMessage;

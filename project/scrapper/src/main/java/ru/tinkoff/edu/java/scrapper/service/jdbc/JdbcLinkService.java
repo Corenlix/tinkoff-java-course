@@ -9,7 +9,7 @@ import ru.tinkoff.edu.java.scrapper.repository.JdbcChatRepository;
 import ru.tinkoff.edu.java.scrapper.repository.JdbcLinkRepository;
 import ru.tinkoff.edu.java.scrapper.repository.SubscriptionRepository;
 import ru.tinkoff.edu.java.scrapper.service.LinkService;
-import ru.tinkoff.edu.java.scrapper.service.LinkUpdaterImpl;
+import ru.tinkoff.edu.java.scrapper.service.linkupdater.LinkUpdaterImpl;
 
 import java.net.URI;
 import java.time.Duration;
