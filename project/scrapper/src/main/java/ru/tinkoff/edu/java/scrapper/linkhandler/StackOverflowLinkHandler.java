@@ -1,7 +1,5 @@
 package ru.tinkoff.edu.java.scrapper.linkhandler;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import io.swagger.v3.oas.models.links.Link;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Component;
@@ -10,7 +8,7 @@ import parseresponse.StackOverflowResponse;
 import ru.tinkoff.edu.java.scrapper.dto.UpdateMessage;
 import ru.tinkoff.edu.java.scrapper.dto.client.stackexchange.StackExchangeQuestionResponse;
 import ru.tinkoff.edu.java.scrapper.httpclient.StackOverflowClient;
-import ru.tinkoff.edu.java.scrapper.linksupdateschecker.stackoverflow.StackOverflowUpdateChecker;
+import ru.tinkoff.edu.java.scrapper.linkupdatechecker.stackoverflow.StackOverflowUpdateChecker;
 import ru.tinkoff.edu.java.scrapper.model.linkcontent.LinkContent;
 import ru.tinkoff.edu.java.scrapper.model.linkcontent.StackoverflowContent;
 
@@ -36,10 +34,15 @@ public class StackOverflowLinkHandler implements LinkHandler {
         return getLinkContent(question);
     }
 
+    @Override
+    public LinkContent getContentFromJson(String json) {
+        return LinkContent.fromJson(json, StackoverflowContent.class);
+    }
+
     @SneakyThrows
     @Override
-    public List<UpdateMessage> getUpdates(LinkContent newContent, String oldContentJson) {
-        var oldStackoverflowContent = LinkContent.fromJson(oldContentJson, StackoverflowContent.class);
+    public List<UpdateMessage> getUpdates(LinkContent newContent, LinkContent oldContent) {
+        var oldStackoverflowContent = (StackoverflowContent) oldContent;
         var newStackoverflowContent = (StackoverflowContent) newContent;
 
         return updateCheckers.stream()

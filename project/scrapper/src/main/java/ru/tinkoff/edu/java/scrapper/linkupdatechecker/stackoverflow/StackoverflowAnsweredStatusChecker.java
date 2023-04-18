@@ -1,4 +1,4 @@
-package ru.tinkoff.edu.java.scrapper.linksupdateschecker.stackoverflow;
+package ru.tinkoff.edu.java.scrapper.linkupdatechecker.stackoverflow;
 
 import org.springframework.stereotype.Component;
 import ru.tinkoff.edu.java.scrapper.dto.UpdateMessage;

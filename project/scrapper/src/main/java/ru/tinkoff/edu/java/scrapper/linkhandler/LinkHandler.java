@@ -9,5 +9,6 @@ import java.util.List;
 public interface LinkHandler {
     boolean canHandle(ParseResponse parseResponse);
     LinkContent getContent(ParseResponse parseResponse);
-    List<UpdateMessage> getUpdates(LinkContent newContent, String oldContentJson);
+    LinkContent getContentFromJson(String json);
+    List<UpdateMessage> getUpdates(LinkContent newContent, LinkContent oldContent);
 }

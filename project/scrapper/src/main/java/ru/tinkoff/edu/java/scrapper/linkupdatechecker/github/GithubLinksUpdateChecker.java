@@ -1,4 +1,4 @@
-package ru.tinkoff.edu.java.scrapper.linksupdateschecker.github;
+package ru.tinkoff.edu.java.scrapper.linkupdatechecker.github;
 
 import ru.tinkoff.edu.java.scrapper.dto.UpdateMessage;
 import ru.tinkoff.edu.java.scrapper.model.linkcontent.GithubContent;

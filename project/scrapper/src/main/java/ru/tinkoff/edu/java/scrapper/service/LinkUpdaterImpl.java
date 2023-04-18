@@ -13,7 +13,6 @@ import ru.tinkoff.edu.java.scrapper.model.LinkEntity;
 import ru.tinkoff.edu.java.scrapper.model.linkcontent.LinkContent;
 
 import java.net.URI;
-import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.util.List;
 
@@ -29,12 +28,19 @@ public class LinkUpdaterImpl implements LinkUpdater {
     public LinkEntity update(LinkEntity link) {
         ParseResponse parseResponse = linkParser.parse(URI.create(link.url()));
         LinkHandler handler = linkHandlerChain.getHandler(parseResponse);
-        LinkContent content = handler.getContent(parseResponse);
-        if (link.contentJson() != null && !link.contentJson().isEmpty()) {
-            List<UpdateMessage> updateMessages = handler.getUpdates(content, link.contentJson());
-            updateMessagesSender.sendUpdates(updateMessages, link.url());
-        }
+        LinkContent currentContent = handler.getContent(parseResponse);
+        sendUpdatesIfAvailable(link, handler, currentContent);
 
-        return new LinkEntity(link.id(), link.url(), content.toJson(), OffsetDateTime.now());
+        return new LinkEntity(link.id(), link.url(), currentContent.toJson(), OffsetDateTime.now());
+    }
+
+    private void sendUpdatesIfAvailable(LinkEntity link, LinkHandler handler, LinkContent currentContent) {
+        if (link.contentJson() != null && !link.contentJson().isEmpty()) {
+            LinkContent oldContent = handler.getContentFromJson(link.contentJson());
+            if (!oldContent.equals(currentContent)) {
+                List<UpdateMessage> updateMessages = handler.getUpdates(currentContent, oldContent);
+                updateMessagesSender.sendUpdates(updateMessages, link.url());
+            }
+        }
     }
 }

@@ -1,6 +1,5 @@
 package ru.tinkoff.edu.java.scrapper.linkhandler;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -10,13 +9,10 @@ import parseresponse.ParseResponse;
 import ru.tinkoff.edu.java.scrapper.dto.UpdateMessage;
 import ru.tinkoff.edu.java.scrapper.dto.client.github.GitHubRepositoryResponse;
 import ru.tinkoff.edu.java.scrapper.httpclient.GitHubClient;
-import ru.tinkoff.edu.java.scrapper.linksupdateschecker.github.GithubLinksUpdateChecker;
-import ru.tinkoff.edu.java.scrapper.mapper.LinkMapper;
+import ru.tinkoff.edu.java.scrapper.linkupdatechecker.github.GithubLinksUpdateChecker;
 import ru.tinkoff.edu.java.scrapper.model.linkcontent.GithubContent;
 import ru.tinkoff.edu.java.scrapper.model.linkcontent.LinkContent;
 
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -41,9 +37,14 @@ public class GithubLinkHandler implements LinkHandler{
     }
 
     @Override
+    public LinkContent getContentFromJson(String json) {
+        return LinkContent.fromJson(json, GithubContent.class);
+    }
+
+    @Override
     @SneakyThrows
-    public List<UpdateMessage> getUpdates(LinkContent newContent, String oldContentJson) {
-        var oldGithubContent = LinkContent.fromJson(oldContentJson, GithubContent.class);
+    public List<UpdateMessage> getUpdates(LinkContent newContent, LinkContent oldContentJson) {
+        var oldGithubContent = (GithubContent) oldContentJson;
         var newGithubContent = (GithubContent) newContent;
 
         return updateCheckers.stream()
