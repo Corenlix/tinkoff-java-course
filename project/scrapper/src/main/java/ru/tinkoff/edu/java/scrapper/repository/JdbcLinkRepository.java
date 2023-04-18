@@ -26,7 +26,7 @@ public class JdbcLinkRepository {
     private final static String ADD_QUERY = "insert into link (url) values (?)";
     private final static String SAVE_QUERY = "update link set url=?, content_json=?, updated_at=? where id=?";
     private final static String REMOVE_QUERY = "delete from link where url = ?";
-    private final static String FIND_ALL_QUERY = "select id, url from link";
+    private final static String FIND_ALL_QUERY = "select id, url, updated_at, content_json from link";
     private final static String FIND_UPDATED_BEFORE_QUERY = "SELECT id FROM link WHERE updated_at < ?";
     private final static String FIND_QUERY = """
             select id, url, updated_at, content_json

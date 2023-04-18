@@ -4,14 +4,15 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DuplicateKeyException;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.DataClassRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
-import ru.tinkoff.edu.java.scrapper.model.LinkEntity;
 import ru.tinkoff.edu.java.scrapper.environment.IntegrationEnvironment;
+import ru.tinkoff.edu.java.scrapper.exception.LinkNotFoundException;
+import ru.tinkoff.edu.java.scrapper.model.LinkEntity;
 
 import java.sql.PreparedStatement;
 import java.util.List;
@@ -36,7 +37,7 @@ public class JdbcLinkRepositoryTest extends IntegrationEnvironment {
 
         // when
         List<LinkEntity> allBefore = getAll();
-        linkRepository.add(TEST_URL, "");
+        linkRepository.add(TEST_URL);
         List<LinkEntity> allAfter = getAll();
 
         // then
@@ -51,10 +52,10 @@ public class JdbcLinkRepositoryTest extends IntegrationEnvironment {
         // given
 
         // when
-        linkRepository.add(TEST_URL, "");
+        linkRepository.add(TEST_URL);
 
         // then
-        assertThatThrownBy(() -> linkRepository.add(TEST_URL, "")).isInstanceOf(DuplicateKeyException.class);
+        assertThatThrownBy(() -> linkRepository.add(TEST_URL)).isInstanceOf(DuplicateKeyException.class);
     }
 
     @Test
@@ -104,21 +105,17 @@ public class JdbcLinkRepositoryTest extends IntegrationEnvironment {
     @Test
     @Transactional
     @Rollback
-    void when_remove_notExists_nothingRemoved() {
+    void when_remove_notExists_exceptionThrows() {
         // given
 
         // when
-        List<LinkEntity> allBefore = getAll();
-        linkRepository.remove(TEST_URL);
-        List<LinkEntity> allAfter = getAll();
 
         // then
-        assertThat(allBefore).hasSize(0);
-        assertThat(allAfter).hasSize(0);
+        assertThatThrownBy(() -> linkRepository.remove(TEST_URL)).isInstanceOf(LinkNotFoundException.class);
     }
 
     private List<LinkEntity> getAll() {
-        return jdbcTemplate.query("select id, url from link", new BeanPropertyRowMapper<>(LinkEntity.class));
+        return jdbcTemplate.query("select id, url, updated_at, content_json from link", new DataClassRowMapper<>(LinkEntity.class));
     }
 
     private Long addLink(String url) {

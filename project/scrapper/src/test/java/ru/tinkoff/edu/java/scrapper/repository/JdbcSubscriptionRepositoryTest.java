@@ -10,6 +10,8 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
+import org.webjars.NotFoundException;
+import ru.tinkoff.edu.java.scrapper.exception.SubscriptionNotFoundException;
 import ru.tinkoff.edu.java.scrapper.model.SubscriptionEntity;
 import ru.tinkoff.edu.java.scrapper.environment.IntegrationEnvironment;
 
@@ -136,22 +138,14 @@ public class JdbcSubscriptionRepositoryTest extends IntegrationEnvironment {
     @Test
     @Transactional
     @Rollback
-    void then_remove_notExists_nothingRemoved() {
+    void then_remove_notExists_throwsException() {
         // given
-        Long chatId = 1L;
-        Long linkId = 1L;
-        createChat(2L);
-        Long createdLinkId = createLink(TEST_URL);
-        createSubscription(2L, createdLinkId);
 
         // when
-        List<SubscriptionEntity> allBefore = getAll();
-        subscriptionRepository.remove(chatId, linkId);
-        List<SubscriptionEntity> allAfter = getAll();
 
         // then
-        assertThat(allBefore).hasSize(1);
-        assertThat(allAfter).hasSize(1);
+        assertThatThrownBy(() -> subscriptionRepository.remove(1L, 2L))
+                .isInstanceOf(SubscriptionNotFoundException.class);
     }
 
     private List<SubscriptionEntity> getAll() {

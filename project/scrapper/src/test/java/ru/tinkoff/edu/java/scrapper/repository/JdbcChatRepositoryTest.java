@@ -5,10 +5,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DuplicateKeyException;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.DataClassRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
+import ru.tinkoff.edu.java.scrapper.exception.ChatNotFoundException;
 import ru.tinkoff.edu.java.scrapper.model.ChatEntity;
 import ru.tinkoff.edu.java.scrapper.environment.IntegrationEnvironment;
 
@@ -76,18 +77,14 @@ public class JdbcChatRepositoryTest extends IntegrationEnvironment {
     @Test
     @Transactional
     @Rollback
-    void when_remove_notExists_nothingRemoved() {
+    void when_remove_notExists_exceptionThrows() {
         // given
-        Long id = 1L;
-        create(id);
-        Long notExistId = 2L;
 
         // when
-        chatRepository.removeById(notExistId);
-        List<ChatEntity> all = findAll();
 
         // then
-        assertThat(all).hasSize(1);
+        assertThatThrownBy(() -> chatRepository.removeById(1L))
+                .isInstanceOf(ChatNotFoundException.class);
     }
 
     @Test
@@ -119,7 +116,7 @@ public class JdbcChatRepositoryTest extends IntegrationEnvironment {
     }
 
     private List<ChatEntity> findAll() {
-        return jdbcTemplate.query("select id from chat", new BeanPropertyRowMapper<>(ChatEntity.class));
+        return jdbcTemplate.query("select id from chat", new DataClassRowMapper<>(ChatEntity.class));
     }
 
     private void create(Long id) {
