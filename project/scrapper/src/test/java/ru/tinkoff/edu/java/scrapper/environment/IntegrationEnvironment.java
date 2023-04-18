@@ -26,7 +26,7 @@ public abstract class IntegrationEnvironment {
     protected static final PostgreSQLContainer<?> PSQL_CONTAINER;
 
     private static final String CHANGELOG_FILE = "master.xml";
-    private static final Path CHANGELOG_PATH = new File("migrations").toPath();
+    private static final Path CHANGELOG_PATH = new File("../migrations").toPath();
 
     static {
         PSQL_CONTAINER = new PostgreSQLContainer<>("postgres:15");

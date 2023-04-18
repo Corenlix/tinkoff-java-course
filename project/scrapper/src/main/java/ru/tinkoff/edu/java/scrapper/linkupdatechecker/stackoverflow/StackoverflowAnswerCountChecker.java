@@ -12,6 +12,6 @@ public class StackoverflowAnswerCountChecker implements StackOverflowUpdateCheck
             return null;
         }
 
-        return new UpdateMessage("Появились новые ответы!");
+        return new UpdateMessage("- Появились новые ответы");
     }
 }

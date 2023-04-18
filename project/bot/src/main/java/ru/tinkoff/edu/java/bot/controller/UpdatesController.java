@@ -26,7 +26,7 @@ public class UpdatesController {
     @PostMapping
     public void addUpdate(@RequestBody LinkUpdate linkUpdate) {
         for (Long tgChatId : linkUpdate.tgChatIds()) {
-            telegramBot.execute(new SendMessage(tgChatId, String.format("Новые обновления для ссылки %s:\n%s", linkUpdate.url(), linkUpdate.description())));
+            telegramBot.execute(new SendMessage(tgChatId, String.format("Новые обновления для ссылки %s:\n %s", linkUpdate.url(), linkUpdate.description())));
         }
     }
 }

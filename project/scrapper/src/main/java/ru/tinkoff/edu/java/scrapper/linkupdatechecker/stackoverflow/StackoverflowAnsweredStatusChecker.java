@@ -9,7 +9,7 @@ public class StackoverflowAnsweredStatusChecker implements StackOverflowUpdateCh
     @Override
     public UpdateMessage checkUpdate(StackoverflowContent newContent, StackoverflowContent oldContent) {
         if (newContent.isAnswered() != oldContent.isAnswered())
-            return new UpdateMessage("Обновился статус ответа!");
+            return new UpdateMessage("- Обновился статус ответа");
 
         return null;
     }
