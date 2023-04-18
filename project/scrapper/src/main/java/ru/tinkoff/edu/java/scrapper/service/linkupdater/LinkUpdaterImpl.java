@@ -41,7 +41,8 @@ public class LinkUpdaterImpl implements LinkUpdater {
             LinkContent oldContent = handler.getContentFromJson(link.contentJson());
             if (!oldContent.equals(currentContent)) {
                 List<UpdateMessage> updateMessages = handler.getUpdates(currentContent, oldContent);
-                updateMessagesSender.sendUpdates(updateMessages, link.url());
+                if(!updateMessages.isEmpty())
+                    updateMessagesSender.sendUpdates(updateMessages, link.url());
             }
         }
     }
