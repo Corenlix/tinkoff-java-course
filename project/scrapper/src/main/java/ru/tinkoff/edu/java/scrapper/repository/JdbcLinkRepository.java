@@ -1,6 +1,7 @@
 package ru.tinkoff.edu.java.scrapper.repository;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.DataClassRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -24,10 +25,10 @@ public class JdbcLinkRepository {
     private final RowMapper<LinkEntity> rowMapper = new DataClassRowMapper<>(LinkEntity.class);
 
     private final static String ADD_QUERY = "insert into link (url) values (?)";
-    private final static String SAVE_QUERY = "update link set url=?, content_json=?, updated_at=? where id=?";
+    private final static String SAVE_QUERY = "update link set url=?, content_json=?::json, updated_at=? where id=?";
     private final static String REMOVE_QUERY = "delete from link where url = ?";
     private final static String FIND_ALL_QUERY = "select id, url, updated_at, content_json from link";
-    private final static String FIND_UPDATED_BEFORE_QUERY = "SELECT id FROM link WHERE updated_at < ?";
+    private final static String FIND_UPDATED_BEFORE_QUERY = "SELECT id, url, updated_at, content_json FROM link WHERE updated_at < ?";
     private final static String FIND_QUERY = """
             select id, url, updated_at, content_json
             from link\s
@@ -69,7 +70,7 @@ public class JdbcLinkRepository {
     }
 
     public void save(LinkEntity link) {
-        jdbcTemplate.update(SAVE_QUERY, link.url(), link.contentJson(), link.id(), link.updatedAt());
+        jdbcTemplate.update(SAVE_QUERY, link.url(), link.contentJson(), link.updatedAt(), link.id());
     }
 
     public void remove(String url) {
@@ -80,7 +81,11 @@ public class JdbcLinkRepository {
     }
 
     public LinkEntity find(String url) {
-        return jdbcTemplate.queryForObject(FIND_QUERY, rowMapper, url);
+        try {
+            return jdbcTemplate.queryForObject(FIND_QUERY, rowMapper, url);
+        } catch (EmptyResultDataAccessException exception) {
+            throw new LinkNotFoundException(url);
+        }
     }
 
     public LinkEntity findById(Long id) {

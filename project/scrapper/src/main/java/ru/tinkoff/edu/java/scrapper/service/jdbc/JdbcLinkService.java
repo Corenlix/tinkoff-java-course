@@ -1,17 +1,15 @@
 package ru.tinkoff.edu.java.scrapper.service.jdbc;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.tinkoff.edu.java.scrapper.dto.UpdateMessage;
+import ru.tinkoff.edu.java.scrapper.exception.LinkNotFoundException;
 import ru.tinkoff.edu.java.scrapper.model.LinkEntity;
 import ru.tinkoff.edu.java.scrapper.repository.JdbcChatRepository;
 import ru.tinkoff.edu.java.scrapper.repository.JdbcLinkRepository;
 import ru.tinkoff.edu.java.scrapper.repository.SubscriptionRepository;
 import ru.tinkoff.edu.java.scrapper.service.LinkService;
 import ru.tinkoff.edu.java.scrapper.service.LinkUpdaterImpl;
-import ru.tinkoff.edu.java.scrapper.service.UpdateMessagesSender;
 
 import java.net.URI;
 import java.time.Duration;
@@ -32,9 +30,8 @@ public class JdbcLinkService implements LinkService {
         LinkEntity linkEntity;
         try {
             linkEntity = linkRepository.find(url.toString());
-        } catch (EmptyResultDataAccessException exception) {
+        } catch (LinkNotFoundException exception) {
             Long linkId = linkRepository.add(url.toString());
-            subscriptionRepository.add(chatId, linkId);
             linkEntity = linkRepository.findById(linkId);
         }
 

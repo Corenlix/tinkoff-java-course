@@ -8,7 +8,7 @@ import ru.tinkoff.edu.java.scrapper.model.linkcontent.GithubContent;
 public class GithubUpdateTimeChecker implements GithubLinksUpdateChecker {
     @Override
     public UpdateMessage checkUpdate(GithubContent newContent, GithubContent oldContent) {
-        if (newContent.getUpdatedAt().equals(oldContent.getUpdatedAt()))
+        if (newContent.getPushedAt().equals(oldContent.getPushedAt()))
             return null;
 
         return new UpdateMessage("Обнаружены изменения в репозитории!");

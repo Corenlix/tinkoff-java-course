@@ -6,8 +6,6 @@ import ru.tinkoff.edu.java.scrapper.dto.UpdateMessage;
 import ru.tinkoff.edu.java.scrapper.dto.client.tgBot.LinkUpdate;
 import ru.tinkoff.edu.java.scrapper.httpclient.TgBotClient;
 import ru.tinkoff.edu.java.scrapper.model.ChatEntity;
-import ru.tinkoff.edu.java.scrapper.repository.JdbcChatRepository;
-import ru.tinkoff.edu.java.scrapper.repository.JdbcLinkRepository;
 
 import java.util.List;
 
@@ -23,8 +21,9 @@ public class UpdateMessagesSender {
                 .map(ChatEntity::id)
                 .toList();
 
-        updateMessages.stream()
-                .map(updateMessage -> new LinkUpdate(0L, url, updateMessage.changesMessage(), chatIds))
-                .forEach(tgBotClient::addUpdate);
+        String updatesMessage =
+                String.join("\n", updateMessages.stream().map(UpdateMessage::changesMessage).toArray(String[]::new));
+
+        tgBotClient.addUpdate(new LinkUpdate(1L, url, updatesMessage, chatIds));
     }
 }
