@@ -1,6 +1,6 @@
-package ParseProcessor;
+package parseprocessor;
 
-import ParseResponse.ParseResponse;
+import parseresponse.ParseResponse;
 
 import java.net.URI;
 

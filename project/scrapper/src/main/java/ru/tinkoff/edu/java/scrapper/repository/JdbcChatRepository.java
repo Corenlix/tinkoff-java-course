@@ -26,6 +26,8 @@ public class JdbcChatRepository {
             where link_id = ?
             """;
 
+    private final static String COUNT_BY_LINK_ID_QUERY = "select count(chat_id) from subscription where link_id = ?";
+
     public List<ChatEntity> findAll() {
         return jdbcTemplate.query(FIND_ALL_QUERY, rowMapper);
     }
@@ -39,6 +41,10 @@ public class JdbcChatRepository {
         if (removedCount == 0) {
             throw new ChatNotFoundException(id);
         }
+    }
+
+    public Integer countByLinkId(Long linkId) {
+        return jdbcTemplate.queryForObject(COUNT_BY_LINK_ID_QUERY, Integer.class, linkId);
     }
 
     public List<ChatEntity> findByLinkId(Long linkId) {

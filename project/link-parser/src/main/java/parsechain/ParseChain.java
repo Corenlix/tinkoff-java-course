@@ -1,7 +1,7 @@
-package ParseChain;
+package parsechain;
 
-import ParseProcessor.ParseProcessor;
-import ParseResponse.ParseResponse;
+import parseprocessor.ParseProcessor;
+import parseresponse.ParseResponse;
 
 import java.net.URI;
 import java.util.LinkedList;

@@ -7,9 +7,9 @@
     <artifactId>project</artifactId>
     <version>1.0-SNAPSHOT</version>
   </parent>
-    <artifactId>link-parser</artifactId>
+  <artifactId>link-parser</artifactId>
   <version>1.0-SNAPSHOT</version>
-  <name>link-parser</name>
+  <name>link-linkparser</name>
   <dependencies>
       <dependency>
           <groupId>org.springframework.boot</groupId>
@@ -30,6 +30,18 @@
         <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-surefire-plugin</artifactId>
+        </plugin>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-jar-plugin</artifactId>
+            <version>3.2.0</version>
+            <executions>
+                <execution>
+                    <goals>
+                        <goal>test-jar</goal>
+                    </goals>
+                </execution>
+            </executions>
         </plugin>
     </plugins>
   </build>

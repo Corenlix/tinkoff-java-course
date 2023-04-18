@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
+import ru.tinkoff.edu.java.scrapper.exception.SubscriptionNotFoundException;
 import ru.tinkoff.edu.java.scrapper.model.LinkEntity;
 import ru.tinkoff.edu.java.scrapper.exception.LinkNotFoundException;
 
@@ -105,7 +106,7 @@ public class JdbcLinkRepository {
         return jdbcTemplate.query(FIND_UPDATED_BEFORE_QUERY, rowMapper, thresholdTimestamp);
     }
 
-    public Integer removeWithoutSubscribers() {
-        return jdbcTemplate.update(REMOVE_WITHOUT_SUBSCRIBERS_QUERY);
+    public void removeWithoutSubscribers() {
+        jdbcTemplate.update(REMOVE_WITHOUT_SUBSCRIBERS_QUERY);
     }
 }

@@ -36,7 +36,7 @@ public class JdbcLinkRepositoryTest extends IntegrationEnvironment {
 
         // when
         List<LinkEntity> allBefore = getAll();
-        linkRepository.add(TEST_URL);
+        linkRepository.add(TEST_URL, "");
         List<LinkEntity> allAfter = getAll();
 
         // then
@@ -51,10 +51,10 @@ public class JdbcLinkRepositoryTest extends IntegrationEnvironment {
         // given
 
         // when
-        linkRepository.add(TEST_URL);
+        linkRepository.add(TEST_URL, "");
 
         // then
-        assertThatThrownBy(() -> linkRepository.add(TEST_URL)).isInstanceOf(DuplicateKeyException.class);
+        assertThatThrownBy(() -> linkRepository.add(TEST_URL, "")).isInstanceOf(DuplicateKeyException.class);
     }
 
     @Test

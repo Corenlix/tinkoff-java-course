@@ -1,6 +1,6 @@
-package ParseProcessor;
+package parseprocessor;
 
-import ParseResponse.GitHubResponse;
+import parseresponse.GitHubResponse;
 import org.jetbrains.annotations.Nullable;
 
 import java.net.URI;

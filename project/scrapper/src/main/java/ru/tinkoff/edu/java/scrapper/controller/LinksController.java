@@ -13,7 +13,7 @@ import ru.tinkoff.edu.java.scrapper.dto.controller.links.ListLinksResponse;
 import ru.tinkoff.edu.java.scrapper.dto.controller.links.RemoveLinkRequest;
 import ru.tinkoff.edu.java.scrapper.dto.controller.tgchat.AddLinkRequest;
 import ru.tinkoff.edu.java.scrapper.mapper.LinkMapper;
-import ru.tinkoff.edu.java.scrapper.service.SubscriptionService;
+import ru.tinkoff.edu.java.scrapper.service.LinkService;
 
 import java.util.List;
 
@@ -21,7 +21,7 @@ import java.util.List;
 @RequestMapping("/links")
 @RequiredArgsConstructor
 public class LinksController {
-    private final SubscriptionService subscriptionService;
+    private final LinkService linkService;
     private final LinkMapper linkMapper;
 
     @Operation(summary ="Получить все отслеживаемые ссылки", responses = {
@@ -29,7 +29,7 @@ public class LinksController {
             @ApiResponse(responseCode = "400", description = "Некорректные параметры запроса", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ApiErrorResponse.class))})})
     @GetMapping
     public ListLinksResponse getAllLinks(@RequestHeader(value="Tg-Chat-Id") Long tgChatId) {
-        List<LinkEntity> links = subscriptionService.findLinksByChatId(tgChatId);
+        List<LinkEntity> links = linkService.findByChatId(tgChatId);
         return linkMapper.toListLinksResponse(links);
     }
 
@@ -38,7 +38,7 @@ public class LinksController {
             @ApiResponse(responseCode = "400", description = "Некорректные параметры запроса", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ApiErrorResponse.class))})})
     @PostMapping
     public LinkResponse addLink(@RequestHeader(value="Tg-Chat-Id") Long tgChatId, @RequestBody AddLinkRequest request) {
-        LinkEntity link = subscriptionService.subscribe(tgChatId, request.link());
+        LinkEntity link = linkService.add(tgChatId, request.link());
         return linkMapper.toLinkResponse(link);
     }
 
@@ -48,7 +48,7 @@ public class LinksController {
             @ApiResponse(responseCode = "404", description = "Ссылка не найдена", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ApiErrorResponse.class))})})
     @DeleteMapping
     public LinkResponse removeLink(@RequestHeader(value="Tg-Chat-Id") Long tgChatId, @RequestBody RemoveLinkRequest request) {
-        LinkEntity linkEntity = subscriptionService.unsubscribe(tgChatId, request.link());
+        LinkEntity linkEntity = linkService.remove(tgChatId, request.link());
         return linkMapper.toLinkResponse(linkEntity);
     }
 }

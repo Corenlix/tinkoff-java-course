@@ -1,6 +1,6 @@
-package ParseProcessor;
+package parseprocessor;
 
-import ParseResponse.StackOverflowResponse;
+import parseresponse.StackOverflowResponse;
 import org.jetbrains.annotations.Nullable;
 
 import java.net.URI;
@@ -28,7 +28,7 @@ public final class StackOverflowProcessor implements ParseProcessor {
         if (pathSegments.length != 4 || !pathSegments[1].equals(QUESTIONS_SECTION)) {
             return null;
         }
-        int id = Integer.parseInt(pathSegments[2]);
+        long id = Long.parseLong(pathSegments[2]);
 
         return new StackOverflowResponse(id);
     }

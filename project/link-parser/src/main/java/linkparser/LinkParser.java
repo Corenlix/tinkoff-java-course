@@ -1,7 +1,9 @@
-import ParseChain.ParseChain;
-import ParseProcessor.GitHubProcessor;
-import ParseProcessor.StackOverflowProcessor;
-import ParseResponse.ParseResponse;
+package linkparser;
+
+import parsechain.ParseChain;
+import parseprocessor.GitHubProcessor;
+import parseprocessor.StackOverflowProcessor;
+import parseresponse.ParseResponse;
 
 import java.net.URI;
 
