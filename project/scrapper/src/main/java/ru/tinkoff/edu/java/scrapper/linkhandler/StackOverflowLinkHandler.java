@@ -1,6 +1,7 @@
 package ru.tinkoff.edu.java.scrapper.linkhandler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.swagger.v3.oas.models.links.Link;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Component;
@@ -38,7 +39,7 @@ public class StackOverflowLinkHandler implements LinkHandler {
     @SneakyThrows
     @Override
     public List<UpdateMessage> getUpdates(LinkContent newContent, String oldContentJson) {
-        var oldStackoverflowContent = new ObjectMapper().readValue(oldContentJson, StackoverflowContent.class);
+        var oldStackoverflowContent = LinkContent.fromJson(oldContentJson, StackoverflowContent.class);
         var newStackoverflowContent = (StackoverflowContent) newContent;
 
         return updateCheckers.stream()
