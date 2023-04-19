@@ -15,6 +15,7 @@ import ru.tinkoff.edu.java.scrapper.service.linkupdater.linkhandler.LinkHandlerC
 
 import java.net.URI;
 import java.time.OffsetDateTime;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -28,20 +29,27 @@ public class LinkUpdaterImpl implements LinkUpdater {
     public LinkEntity update(LinkEntity link) {
         ParseResponse parseResponse = linkParser.parse(URI.create(link.url()));
         LinkHandler handler = linkHandlerChain.getHandler(parseResponse);
-        LinkContent currentContent = handler.getContent(parseResponse);
-        sendUpdatesIfAvailable(link, handler, currentContent);
+        LinkContent currentLinkContent = handler.getContent(parseResponse);
+        sendUpdatesIfAvailable(link, handler, currentLinkContent);
 
-        return new LinkEntity(link.id(), link.url(), currentContent.toJson(), OffsetDateTime.now());
+        return new LinkEntity(link.id(), link.url(), currentLinkContent.toJson(), OffsetDateTime.now());
     }
 
-    private void sendUpdatesIfAvailable(LinkEntity link, LinkHandler handler, LinkContent currentContent) {
+    private void sendUpdatesIfAvailable(LinkEntity link, LinkHandler handler, LinkContent currentLinkContent) {
+        List<UpdateMessage> updateMessages = getAvailableUpdates(link, handler, currentLinkContent);
+        if(!updateMessages.isEmpty()) {
+            updateMessagesSender.sendUpdates(updateMessages, link.url());
+        }
+    }
+
+    private List<UpdateMessage> getAvailableUpdates(LinkEntity link, LinkHandler handler, LinkContent currentLinkContent) {
         if (link.contentJson() != null && !link.contentJson().isEmpty()) {
             LinkContent oldContent = handler.getContentFromJson(link.contentJson());
-            if (!oldContent.equals(currentContent)) {
-                List<UpdateMessage> updateMessages = handler.getUpdates(currentContent, oldContent);
-                if(!updateMessages.isEmpty())
-                    updateMessagesSender.sendUpdates(updateMessages, link.url());
+            if (!oldContent.equals(currentLinkContent)) {
+                return handler.getUpdates(currentLinkContent, oldContent);
             }
         }
+
+        return Collections.emptyList();
     }
 }
