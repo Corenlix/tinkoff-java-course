@@ -13,7 +13,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
+@Transactional
 public class JdbcChatService implements ChatService {
     private final JdbcChatRepository jdbcChatRepository;
     private final JdbcLinkRepository jdbcLinkRepository;

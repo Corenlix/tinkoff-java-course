@@ -17,7 +17,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
+@Transactional
 public class JdbcLinkService implements LinkService {
     private final SubscriptionRepository subscriptionRepository;
     private final JdbcLinkRepository linkRepository;
