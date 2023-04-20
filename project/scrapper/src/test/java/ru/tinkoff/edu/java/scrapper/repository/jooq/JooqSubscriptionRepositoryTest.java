@@ -1,19 +1,18 @@
-package ru.tinkoff.edu.java.scrapper.repository;
+package ru.tinkoff.edu.java.scrapper.repository.jooq;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DuplicateKeyException;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.DataClassRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
-import org.webjars.NotFoundException;
+import ru.tinkoff.edu.java.scrapper.environment.IntegrationEnvironment;
 import ru.tinkoff.edu.java.scrapper.exception.SubscriptionNotFoundException;
 import ru.tinkoff.edu.java.scrapper.model.SubscriptionEntity;
-import ru.tinkoff.edu.java.scrapper.environment.IntegrationEnvironment;
 
 import java.sql.PreparedStatement;
 import java.util.List;
@@ -21,12 +20,12 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @SpringBootTest
-public class JdbcSubscriptionRepositoryTest extends IntegrationEnvironment {
+public class JooqSubscriptionRepositoryTest extends IntegrationEnvironment {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
-    private SubscriptionRepository subscriptionRepository;
+    private JooqSubscriptionRepository subscriptionRepository;
 
     private static final String TEST_URL = "https://github.com/Corenlix/tinkoff-java-course";
 
@@ -149,7 +148,7 @@ public class JdbcSubscriptionRepositoryTest extends IntegrationEnvironment {
     }
 
     private List<SubscriptionEntity> getAll() {
-        return jdbcTemplate.query("select chat_id, link_id from subscription", new BeanPropertyRowMapper<>(SubscriptionEntity.class));
+        return jdbcTemplate.query("select chat_id, link_id from subscription", new DataClassRowMapper<>(SubscriptionEntity.class));
     }
 
     private Long createLink(String url) {

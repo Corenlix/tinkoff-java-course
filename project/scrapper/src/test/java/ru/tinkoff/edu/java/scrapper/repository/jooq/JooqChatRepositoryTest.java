@@ -1,4 +1,4 @@
-package ru.tinkoff.edu.java.scrapper.repository;
+package ru.tinkoff.edu.java.scrapper.repository.jooq;
 
 
 import org.junit.jupiter.api.Test;
@@ -9,9 +9,10 @@ import org.springframework.jdbc.core.DataClassRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
+import ru.tinkoff.edu.java.scrapper.environment.IntegrationEnvironment;
 import ru.tinkoff.edu.java.scrapper.exception.ChatNotFoundException;
 import ru.tinkoff.edu.java.scrapper.model.ChatEntity;
-import ru.tinkoff.edu.java.scrapper.environment.IntegrationEnvironment;
+import ru.tinkoff.edu.java.scrapper.repository.jdbc.JdbcChatRepository;
 
 import java.util.List;
 
@@ -19,12 +20,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @SpringBootTest
-public class JdbcChatRepositoryTest extends IntegrationEnvironment {
+public class JooqChatRepositoryTest extends IntegrationEnvironment {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
-    private JdbcChatRepository chatRepository;
+    private JooqChatRepository chatRepository;
 
     @Test
     @Transactional

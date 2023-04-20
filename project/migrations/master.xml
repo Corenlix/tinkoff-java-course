@@ -15,4 +15,5 @@
     <include file="db-init/create_link_id_sequence.sql" relativeToChangelogFile="true"/>
     <include file="db-init/add_unique_constraint_and_index_to_link_url.sql" relativeToChangelogFile="true"/>
     <include file="db-init/add_field_content_json_into_link.sql" relativeToChangelogFile="true"/>
+    <include file="db-init/change_date_type.sql" relativeToChangelogFile="true"/>
 </databaseChangeLog>

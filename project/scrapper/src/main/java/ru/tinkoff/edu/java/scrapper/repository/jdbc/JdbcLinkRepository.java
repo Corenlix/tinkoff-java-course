@@ -1,4 +1,4 @@
-package ru.tinkoff.edu.java.scrapper.repository;
+package ru.tinkoff.edu.java.scrapper.repository.jdbc;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -16,6 +16,7 @@ import java.sql.PreparedStatement;
 import java.sql.Timestamp;
 import java.time.Duration;
 import java.time.Instant;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 @Repository
@@ -104,11 +105,9 @@ public class JdbcLinkRepository {
     }
 
     public List<LinkEntity> findLinksUpdatedBefore(Duration interval) {
-        Instant now = Instant.now();
-        Instant threshold = now.minus(interval);
-        Timestamp thresholdTimestamp = Timestamp.from(threshold);
+        OffsetDateTime dateTime = OffsetDateTime.now().minus(interval);
 
-        return jdbcTemplate.query(FIND_UPDATED_BEFORE_QUERY, rowMapper, thresholdTimestamp);
+        return jdbcTemplate.query(FIND_UPDATED_BEFORE_QUERY, rowMapper, dateTime);
     }
 
     public void removeWithoutSubscribers() {

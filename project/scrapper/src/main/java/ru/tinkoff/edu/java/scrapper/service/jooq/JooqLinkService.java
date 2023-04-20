@@ -1,4 +1,4 @@
-package ru.tinkoff.edu.java.scrapper.service.jdbc;
+package ru.tinkoff.edu.java.scrapper.service.jooq;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Primary;
@@ -6,9 +6,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.tinkoff.edu.java.scrapper.exception.LinkNotFoundException;
 import ru.tinkoff.edu.java.scrapper.model.LinkEntity;
-import ru.tinkoff.edu.java.scrapper.repository.jdbc.JdbcChatRepository;
-import ru.tinkoff.edu.java.scrapper.repository.jdbc.JdbcLinkRepository;
-import ru.tinkoff.edu.java.scrapper.repository.jdbc.JdbcSubscriptionRepository;
+import ru.tinkoff.edu.java.scrapper.repository.jooq.JooqChatRepository;
+import ru.tinkoff.edu.java.scrapper.repository.jooq.JooqLinkRepository;
+import ru.tinkoff.edu.java.scrapper.repository.jooq.JooqSubscriptionRepository;
 import ru.tinkoff.edu.java.scrapper.service.LinkService;
 import ru.tinkoff.edu.java.scrapper.service.linkupdater.LinkUpdaterImpl;
 
@@ -17,11 +17,12 @@ import java.time.Duration;
 import java.util.List;
 
 @Service
+@Primary
 @RequiredArgsConstructor
-public class JdbcLinkService implements LinkService {
-    private final JdbcSubscriptionRepository subscriptionRepository;
-    private final JdbcLinkRepository linkRepository;
-    private final JdbcChatRepository chatRepository;
+public class JooqLinkService implements LinkService {
+    private final JooqSubscriptionRepository subscriptionRepository;
+    private final JooqLinkRepository linkRepository;
+    private final JooqChatRepository chatRepository;
     private final LinkUpdaterImpl linkUpdater;
 
     @Override

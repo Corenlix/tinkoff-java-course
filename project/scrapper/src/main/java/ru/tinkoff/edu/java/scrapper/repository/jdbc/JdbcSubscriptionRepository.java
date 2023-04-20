@@ -1,4 +1,4 @@
-package ru.tinkoff.edu.java.scrapper.repository;
+package ru.tinkoff.edu.java.scrapper.repository.jdbc;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.DataClassRowMapper;
@@ -12,7 +12,7 @@ import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
-public class SubscriptionRepository {
+public class JdbcSubscriptionRepository {
     private final JdbcTemplate jdbcTemplate;
     private final RowMapper<SubscriptionEntity> mapper = new DataClassRowMapper<>(SubscriptionEntity.class);
 

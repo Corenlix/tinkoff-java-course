@@ -6,7 +6,7 @@ package ru.tinkoff.edu.java.scrapper.domain.jooq.tables.pojos;
 
 import java.beans.ConstructorProperties;
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 import javax.annotation.processing.Generated;
 
@@ -32,7 +32,7 @@ public class Link implements Serializable {
 
     private Long id;
     private String url;
-    private LocalDateTime updatedAt;
+    private OffsetDateTime updatedAt;
     private JSON contentJson;
 
     public Link() {}
@@ -48,7 +48,7 @@ public class Link implements Serializable {
     public Link(
         @NotNull Long id,
         @NotNull String url,
-        @NotNull LocalDateTime updatedAt,
+        @NotNull OffsetDateTime updatedAt,
         @Nullable JSON contentJson
     ) {
         this.id = id;
@@ -92,14 +92,14 @@ public class Link implements Serializable {
      * Getter for <code>public.link.updated_at</code>.
      */
     @NotNull
-    public LocalDateTime getUpdatedAt() {
+    public OffsetDateTime getUpdatedAt() {
         return this.updatedAt;
     }
 
     /**
      * Setter for <code>public.link.updated_at</code>.
      */
-    public void setUpdatedAt(@NotNull LocalDateTime updatedAt) {
+    public void setUpdatedAt(@NotNull OffsetDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
 

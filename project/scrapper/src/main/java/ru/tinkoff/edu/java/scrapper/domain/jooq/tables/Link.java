@@ -4,7 +4,7 @@
 package ru.tinkoff.edu.java.scrapper.domain.jooq.tables;
 
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
@@ -80,7 +80,7 @@ public class Link extends TableImpl<LinkRecord> {
     /**
      * The column <code>public.link.updated_at</code>.
      */
-    public final TableField<LinkRecord, LocalDateTime> UPDATED_AT = createField(DSL.name("updated_at"), SQLDataType.LOCALDATETIME(6).nullable(false).defaultValue(DSL.field("now()", SQLDataType.LOCALDATETIME)), this, "");
+    public final TableField<LinkRecord, OffsetDateTime> UPDATED_AT = createField(DSL.name("updated_at"), SQLDataType.TIMESTAMPWITHTIMEZONE(6).nullable(false).defaultValue(DSL.field("now()", SQLDataType.TIMESTAMPWITHTIMEZONE)), this, "");
 
     /**
      * The column <code>public.link.content_json</code>.
@@ -201,14 +201,14 @@ public class Link extends TableImpl<LinkRecord> {
 
     @Override
     @NotNull
-    public Row4<Long, String, LocalDateTime, JSON> fieldsRow() {
+    public Row4<Long, String, OffsetDateTime, JSON> fieldsRow() {
         return (Row4) super.fieldsRow();
     }
 
     /**
      * Convenience mapping calling {@link SelectField#convertFrom(Function)}.
      */
-    public <U> SelectField<U> mapping(Function4<? super Long, ? super String, ? super LocalDateTime, ? super JSON, ? extends U> from) {
+    public <U> SelectField<U> mapping(Function4<? super Long, ? super String, ? super OffsetDateTime, ? super JSON, ? extends U> from) {
         return convertFrom(Records.mapping(from));
     }
 
@@ -216,7 +216,7 @@ public class Link extends TableImpl<LinkRecord> {
      * Convenience mapping calling {@link SelectField#convertFrom(Class,
      * Function)}.
      */
-    public <U> SelectField<U> mapping(Class<U> toType, Function4<? super Long, ? super String, ? super LocalDateTime, ? super JSON, ? extends U> from) {
+    public <U> SelectField<U> mapping(Class<U> toType, Function4<? super Long, ? super String, ? super OffsetDateTime, ? super JSON, ? extends U> from) {
         return convertFrom(toType, Records.mapping(from));
     }
 }
