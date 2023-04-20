@@ -8,6 +8,7 @@ import ru.tinkoff.edu.java.scrapper.model.ChatEntity;
 import ru.tinkoff.edu.java.scrapper.model.LinkEntity;
 import ru.tinkoff.edu.java.scrapper.repository.jooq.JooqChatRepository;
 import ru.tinkoff.edu.java.scrapper.repository.jooq.JooqLinkRepository;
+import ru.tinkoff.edu.java.scrapper.repository.jooq.JooqSubscriptionRepository;
 import ru.tinkoff.edu.java.scrapper.service.ChatService;
 
 import java.util.List;
@@ -17,6 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class JooqChatService implements ChatService {
     private final JooqChatRepository jooqChatRepository;
+    private final JooqSubscriptionRepository jooqSubscriptionRepository;
     private final JooqLinkRepository jooqLinkRepository;
 
     @Override
@@ -29,12 +31,12 @@ public class JooqChatService implements ChatService {
     @Transactional
     public void unregister(long id) {
         jooqChatRepository.removeById(id);
-        jooqLinkRepository.removeWithoutSubscribers();
+        jooqSubscriptionRepository.removeLinksWithoutSubscribers();
     }
 
     @Override
     public List<ChatEntity> findByLink(String url) {
         LinkEntity link = jooqLinkRepository.find(url);
-        return jooqChatRepository.findByLinkId(link.id());
+        return jooqSubscriptionRepository.findChatsByLinkId(link.id());
     }
 }

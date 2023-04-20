@@ -40,17 +40,7 @@ public class JdbcLinkRepository {
             from link\s
             where id = ?
             """;
-    private final static String FIND_BY_CHAT_ID_QUERY = """
-            select id, url, updated_at, content_json
-            from link\s
-            join subscription s on link.id = s.link_id
-            where chat_id = ?
-            """;
     private final static String REMOVE_BY_ID_QUERY = "delete from link where id = ?";
-    private final static String REMOVE_WITHOUT_SUBSCRIBERS_QUERY = """
-            delete from link\s
-            where (select count(link_id) from subscription where link_id = link.id) = 0
-            """;
 
 
     public List<LinkEntity> findAll() {
@@ -93,10 +83,6 @@ public class JdbcLinkRepository {
         return jdbcTemplate.queryForObject(FIND_BY_ID_QUERY, rowMapper, id);
     }
 
-    public List<LinkEntity> findByChatId(Long chatId) {
-        return jdbcTemplate.query(FIND_BY_CHAT_ID_QUERY, rowMapper, chatId);
-    }
-
     public void removeById(Long id) {
         int removedCount = jdbcTemplate.update(REMOVE_BY_ID_QUERY, id);
         if (removedCount == 0) {
@@ -104,13 +90,7 @@ public class JdbcLinkRepository {
         }
     }
 
-    public List<LinkEntity> findLinksUpdatedBefore(Duration interval) {
-        OffsetDateTime dateTime = OffsetDateTime.now().minus(interval);
-
+    public List<LinkEntity> findLinksUpdatedBefore(OffsetDateTime dateTime) {
         return jdbcTemplate.query(FIND_UPDATED_BEFORE_QUERY, rowMapper, dateTime);
-    }
-
-    public void removeWithoutSubscribers() {
-        jdbcTemplate.update(REMOVE_WITHOUT_SUBSCRIBERS_QUERY);
     }
 }

@@ -1,7 +1,6 @@
 package ru.tinkoff.edu.java.scrapper.service.jdbc;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.tinkoff.edu.java.scrapper.exception.LinkNotFoundException;
@@ -13,7 +12,7 @@ import ru.tinkoff.edu.java.scrapper.service.LinkService;
 import ru.tinkoff.edu.java.scrapper.service.linkupdater.LinkUpdaterImpl;
 
 import java.net.URI;
-import java.time.Duration;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 @Service
@@ -47,7 +46,7 @@ public class JdbcLinkService implements LinkService {
     public LinkEntity remove(Long chatId, URI url) {
         LinkEntity linkEntity = linkRepository.find(url.toString());
         subscriptionRepository.remove(chatId, linkEntity.id());
-        Integer subscriptions = chatRepository.countByLinkId(linkEntity.id());
+        int subscriptions = subscriptionRepository.countByLinkId(linkEntity.id());
         if (subscriptions == 0) {
             linkRepository.removeById(linkEntity.id());
         }
@@ -63,11 +62,11 @@ public class JdbcLinkService implements LinkService {
 
     @Override
     public List<LinkEntity> findByChatId(Long chatId) {
-        return linkRepository.findByChatId(chatId);
+        return subscriptionRepository.findLinksByChatId(chatId);
     }
 
     @Override
-    public List<LinkEntity> findLinksUpdatedBefore(Duration interval) {
-        return linkRepository.findLinksUpdatedBefore(interval);
+    public List<LinkEntity> findLinksUpdatedBefore(OffsetDateTime dateTime) {
+        return linkRepository.findLinksUpdatedBefore(dateTime);
     }
 }

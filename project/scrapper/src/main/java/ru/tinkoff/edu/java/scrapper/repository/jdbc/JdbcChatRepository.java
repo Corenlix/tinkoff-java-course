@@ -19,14 +19,6 @@ public class JdbcChatRepository {
     private final static String ADD_QUERY = "insert into chat (id) values (?)";
     private final static String REMOVE_BY_ID_QUERY = "delete from chat where id = ?";
     private final static String FIND_ALL_QUERY = "select id from chat";
-    private final static String FIND_BY_LINK_ID_QUERY = """
-            select id 
-            from chat
-            join subscription on chat.id = chat_id
-            where link_id = ?
-            """;
-
-    private final static String COUNT_BY_LINK_ID_QUERY = "select count(chat_id) from subscription where link_id = ?";
 
     public List<ChatEntity> findAll() {
         return jdbcTemplate.query(FIND_ALL_QUERY, rowMapper);
@@ -41,13 +33,5 @@ public class JdbcChatRepository {
         if (removedCount == 0) {
             throw new ChatNotFoundException(id);
         }
-    }
-
-    public Integer countByLinkId(Long linkId) {
-        return jdbcTemplate.queryForObject(COUNT_BY_LINK_ID_QUERY, Integer.class, linkId);
-    }
-
-    public List<ChatEntity> findByLinkId(Long linkId) {
-        return jdbcTemplate.query(FIND_BY_LINK_ID_QUERY, rowMapper, linkId);
     }
 }

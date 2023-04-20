@@ -9,6 +9,7 @@ import ru.tinkoff.edu.java.scrapper.service.LinkService;
 import ru.tinkoff.edu.java.scrapper.service.LinkUpdater;
 
 import java.time.Duration;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 @Slf4j
@@ -26,7 +27,8 @@ public class LinkUpdaterScheduler {
 
     @Scheduled(fixedDelayString = "#{@schedulerIntervalMs}")
     public void update() {
-        List<LinkEntity> linksToUpdate = linkService.findLinksUpdatedBefore(linkUpdateInterval);
+        OffsetDateTime dateTime = OffsetDateTime.now().minus(linkUpdateInterval);
+        List<LinkEntity> linksToUpdate = linkService.findLinksUpdatedBefore(dateTime);
         for (LinkEntity linkEntity : linksToUpdate) {
             LinkEntity updatedLink = linkUpdater.update(linkEntity);
             linkService.save(updatedLink);

@@ -20,7 +20,6 @@ import static org.jooq.impl.DSL.select;
 public class JooqLinkRepository {
     private final DSLContext context;
     private final Link link = Link.LINK;
-    private final Subscription subscription = Subscription.SUBSCRIPTION;
 
     public List<LinkEntity> findAll() {
         return context.select(link.fields())
@@ -69,13 +68,6 @@ public class JooqLinkRepository {
         return entity;
     }
 
-    public List<LinkEntity> findByChatId(Long chatId) {
-        return context.select(link.fields())
-                .from(link)
-                .join(subscription).on(link.ID.eq(subscription.LINK_ID))
-                .where(subscription.CHAT_ID.eq(chatId))
-                .fetchInto(LinkEntity.class);
-    }
 
     public void remove(String url) {
         int removedCount = context.delete(link)
@@ -95,23 +87,10 @@ public class JooqLinkRepository {
             throw new LinkNotFoundException(id);
     }
 
-    public List<LinkEntity> findLinksUpdatedBefore(Duration interval) {
-        OffsetDateTime dateTime = OffsetDateTime.now().minus(interval);
-
+    public List<LinkEntity> findLinksUpdatedBefore(OffsetDateTime dateTime) {
         return context.select(link.fields())
                 .from(link)
                 .where(link.UPDATED_AT.lessOrEqual(dateTime))
                 .fetchInto(LinkEntity.class);
-    }
-
-    public void removeWithoutSubscribers() {
-        context.delete(link)
-                .where(link.ID.in(
-                        select(link.ID).from(link)
-                                .leftOuterJoin(subscription)
-                                .on(subscription.LINK_ID.eq(link.ID))
-                                .where(subscription.CHAT_ID.isNull())
-                ))
-                .execute();
     }
 }
