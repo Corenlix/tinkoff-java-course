@@ -12,6 +12,7 @@ import ru.tinkoff.edu.java.scrapper.mapper.LinkMapper;
 import ru.tinkoff.edu.java.scrapper.repository.jpa.JpaChatRepository;
 import ru.tinkoff.edu.java.scrapper.repository.jpa.JpaLinkRepository;
 import ru.tinkoff.edu.java.scrapper.service.LinkService;
+import ru.tinkoff.edu.java.scrapper.service.LinkUpdater;
 
 import java.net.URI;
 import java.time.OffsetDateTime;
@@ -24,26 +25,27 @@ public class JpaLinkService implements LinkService {
 
     private final JpaLinkRepository linkRepository;
     private final JpaChatRepository chatRepository;
+    private final LinkUpdater linkUpdater;
     private final LinkMapper linkMapper;
 
     @Override
     @Transactional
     public LinkEntity add(Long chatId, URI url) {
-        JpaLinkEntity linkEntity = new JpaLinkEntity();
-        linkEntity.setUrl(url.toString());
+        JpaChatEntity chat = chatRepository.findById(chatId).orElseThrow(() -> new ChatNotFoundException(chatId));
 
-        JpaChatEntity chat = chatRepository.findById(chatId).orElseGet(() -> {
-            JpaChatEntity chatEntity = new JpaChatEntity();
-            chatEntity.setId(chatId);
-            chatRepository.save(chatEntity);
-            return chatEntity;
+        JpaLinkEntity linkEntity = linkRepository.findByUrl(url.toString()).orElseGet(() -> {
+            JpaLinkEntity entityToSave = new JpaLinkEntity();
+            entityToSave.setUrl(url.toString());
+            return linkRepository.save(entityToSave);
         });
 
+        JpaLinkEntity updatedLink = linkMapper.toJpaLink(linkUpdater.update(linkMapper.toLink(linkEntity)));
         if (!linkEntity.getChats().contains(chat)) {
-            linkEntity.getChats().add(chat);
+            updatedLink.getChats().add(chat);
         }
-        linkRepository.save(linkEntity);
-        return linkMapper.toLink(linkEntity);
+        linkRepository.save(updatedLink);
+
+        return linkMapper.toLink(updatedLink);
     }
 
     @Override

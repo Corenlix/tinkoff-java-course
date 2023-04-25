@@ -4,12 +4,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.tinkoff.edu.java.scrapper.exception.LinkNotFoundException;
 import ru.tinkoff.edu.java.scrapper.domain.LinkEntity;
+import ru.tinkoff.edu.java.scrapper.exception.LinkNotFoundException;
 import ru.tinkoff.edu.java.scrapper.repository.jooq.JooqLinkRepository;
 import ru.tinkoff.edu.java.scrapper.repository.jooq.JooqSubscriptionRepository;
 import ru.tinkoff.edu.java.scrapper.service.LinkService;
-import ru.tinkoff.edu.java.scrapper.service.linkupdater.LinkUpdaterImpl;
+import ru.tinkoff.edu.java.scrapper.service.LinkUpdater;
 
 import java.net.URI;
 import java.time.OffsetDateTime;
@@ -21,7 +21,7 @@ import java.util.List;
 public class JooqLinkService implements LinkService {
     private final JooqSubscriptionRepository subscriptionRepository;
     private final JooqLinkRepository linkRepository;
-    private final LinkUpdaterImpl linkUpdater;
+    private final LinkUpdater linkUpdater;
 
     @Override
     @Transactional
