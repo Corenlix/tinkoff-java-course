@@ -11,8 +11,8 @@ import ru.tinkoff.edu.java.scrapper.dto.client.github.GitHubRepositoryResponse;
 import ru.tinkoff.edu.java.scrapper.httpclient.GitHubClient;
 import ru.tinkoff.edu.java.scrapper.service.linkupdater.linkhandler.LinkHandler;
 import ru.tinkoff.edu.java.scrapper.service.linkupdater.linkhandler.impl.linkupdatechecker.github.GithubLinksUpdateChecker;
-import ru.tinkoff.edu.java.scrapper.model.linkcontent.GithubContent;
-import ru.tinkoff.edu.java.scrapper.model.linkcontent.LinkContent;
+import ru.tinkoff.edu.java.scrapper.domain.linkcontent.GithubContent;
+import ru.tinkoff.edu.java.scrapper.domain.linkcontent.LinkContent;
 
 import java.util.List;
 import java.util.Objects;

@@ -5,10 +5,9 @@ import org.springframework.jdbc.core.DataClassRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
-import ru.tinkoff.edu.java.scrapper.model.ChatEntity;
-import ru.tinkoff.edu.java.scrapper.model.LinkEntity;
-import ru.tinkoff.edu.java.scrapper.model.SubscriptionEntity;
-import ru.tinkoff.edu.java.scrapper.exception.SubscriptionNotFoundException;
+import ru.tinkoff.edu.java.scrapper.domain.ChatEntity;
+import ru.tinkoff.edu.java.scrapper.domain.LinkEntity;
+import ru.tinkoff.edu.java.scrapper.domain.SubscriptionEntity;
 
 import java.util.List;
 
@@ -41,8 +40,8 @@ public class JdbcSubscriptionRepository {
             where chat_id = ?
             """;
 
-    public void add(Long chatId, Long linkId) {
-        jdbcTemplate.update(ADD_QUERY, chatId, linkId);
+    public int add(Long chatId, Long linkId) {
+        return jdbcTemplate.update(ADD_QUERY, chatId, linkId);
     }
 
     public List<SubscriptionEntity> findAll() {
@@ -57,18 +56,15 @@ public class JdbcSubscriptionRepository {
         return jdbcTemplate.query(FIND_LINKS_BY_CHAT_ID_QUERY, linkRowMapper, chatId);
     }
 
-    public void remove(Long chatId, Long linkId) {
-        int removedCount = jdbcTemplate.update(REMOVE_QUERY, chatId, linkId);
-        if (removedCount == 0) {
-            throw new SubscriptionNotFoundException(chatId, linkId);
-        }
+    public int remove(Long chatId, Long linkId) {
+        return jdbcTemplate.update(REMOVE_QUERY, chatId, linkId);
     }
 
-    public void removeLinksWithoutSubscribers() {
-        jdbcTemplate.update(REMOVE_LINKS_WITHOUT_SUBSCRIBERS_QUERY);
+    public int removeLinksWithoutSubscribers() {
+        return jdbcTemplate.update(REMOVE_LINKS_WITHOUT_SUBSCRIBERS_QUERY);
     }
 
-    public Integer countByLinkId(Long linkId) {
+    public int countByLinkId(Long linkId) {
         return jdbcTemplate.queryForObject(COUNT_BY_LINK_ID_QUERY, Integer.class, linkId);
     }
 }

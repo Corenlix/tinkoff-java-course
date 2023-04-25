@@ -11,8 +11,7 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 import ru.tinkoff.edu.java.scrapper.environment.IntegrationEnvironment;
-import ru.tinkoff.edu.java.scrapper.exception.SubscriptionNotFoundException;
-import ru.tinkoff.edu.java.scrapper.model.SubscriptionEntity;
+import ru.tinkoff.edu.java.scrapper.domain.SubscriptionEntity;
 
 import java.sql.PreparedStatement;
 import java.util.List;
@@ -137,14 +136,14 @@ public class JooqSubscriptionRepositoryTest extends IntegrationEnvironment {
     @Test
     @Transactional
     @Rollback
-    void then_remove_notExists_throwsException() {
+    void then_remove_notExists_nothingRemoved() {
         // given
 
         // when
+        int removedCount = subscriptionRepository.remove(1L, 2L);
 
         // then
-        assertThatThrownBy(() -> subscriptionRepository.remove(1L, 2L))
-                .isInstanceOf(SubscriptionNotFoundException.class);
+        assertThat(removedCount).isEqualTo(0);
     }
 
     private List<SubscriptionEntity> getAll() {

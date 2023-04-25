@@ -4,8 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.tinkoff.edu.java.scrapper.model.ChatEntity;
-import ru.tinkoff.edu.java.scrapper.model.LinkEntity;
+import ru.tinkoff.edu.java.scrapper.exception.ChatNotFoundException;
+import ru.tinkoff.edu.java.scrapper.exception.LinkNotFoundException;
+import ru.tinkoff.edu.java.scrapper.domain.ChatEntity;
+import ru.tinkoff.edu.java.scrapper.domain.LinkEntity;
 import ru.tinkoff.edu.java.scrapper.repository.jooq.JooqChatRepository;
 import ru.tinkoff.edu.java.scrapper.repository.jooq.JooqLinkRepository;
 import ru.tinkoff.edu.java.scrapper.repository.jooq.JooqSubscriptionRepository;
@@ -30,13 +32,17 @@ public class JooqChatService implements ChatService {
     @Override
     @Transactional
     public void unregister(long id) {
-        jooqChatRepository.removeById(id);
+        int removedRows = jooqChatRepository.removeById(id);
+        if (removedRows == 0) {
+            throw new ChatNotFoundException(id);
+        }
+
         jooqSubscriptionRepository.removeLinksWithoutSubscribers();
     }
 
     @Override
     public List<ChatEntity> findByLink(String url) {
-        LinkEntity link = jooqLinkRepository.find(url);
+        LinkEntity link = jooqLinkRepository.find(url).orElseThrow(() -> new LinkNotFoundException(url));
         return jooqSubscriptionRepository.findChatsByLinkId(link.id());
     }
 }

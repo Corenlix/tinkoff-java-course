@@ -10,8 +10,8 @@ import ru.tinkoff.edu.java.scrapper.dto.client.stackexchange.StackExchangeQuesti
 import ru.tinkoff.edu.java.scrapper.httpclient.StackOverflowClient;
 import ru.tinkoff.edu.java.scrapper.service.linkupdater.linkhandler.LinkHandler;
 import ru.tinkoff.edu.java.scrapper.service.linkupdater.linkhandler.impl.linkupdatechecker.stackoverflow.StackOverflowUpdateChecker;
-import ru.tinkoff.edu.java.scrapper.model.linkcontent.LinkContent;
-import ru.tinkoff.edu.java.scrapper.model.linkcontent.StackoverflowContent;
+import ru.tinkoff.edu.java.scrapper.domain.linkcontent.LinkContent;
+import ru.tinkoff.edu.java.scrapper.domain.linkcontent.StackoverflowContent;
 
 import java.util.List;
 import java.util.Objects;

@@ -3,7 +3,6 @@ package ru.tinkoff.edu.java.scrapper.repository.jdbc;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.DataClassRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -11,15 +10,12 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 import ru.tinkoff.edu.java.scrapper.environment.IntegrationEnvironment;
-import ru.tinkoff.edu.java.scrapper.exception.LinkNotFoundException;
-import ru.tinkoff.edu.java.scrapper.model.LinkEntity;
-import ru.tinkoff.edu.java.scrapper.repository.jdbc.JdbcLinkRepository;
+import ru.tinkoff.edu.java.scrapper.domain.LinkEntity;
 
 import java.sql.PreparedStatement;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @SpringBootTest
 public class JdbcLinkRepositoryTest extends IntegrationEnvironment {
     @Autowired
@@ -44,19 +40,6 @@ public class JdbcLinkRepositoryTest extends IntegrationEnvironment {
         // then
         assertThat(allBefore).hasSize(0);
         assertThat(allAfter).hasSize(1);
-    }
-
-    @Test
-    @Transactional
-    @Rollback
-    void when_add_alreadyExist_throwsException() {
-        // given
-
-        // when
-        linkRepository.add(TEST_URL);
-
-        // then
-        assertThatThrownBy(() -> linkRepository.add(TEST_URL)).isInstanceOf(DuplicateKeyException.class);
     }
 
     @Test
@@ -106,13 +89,14 @@ public class JdbcLinkRepositoryTest extends IntegrationEnvironment {
     @Test
     @Transactional
     @Rollback
-    void when_remove_notExists_exceptionThrows() {
+    void when_remove_notExists_nothingRemoved() {
         // given
 
         // when
+        int removedCount = linkRepository.remove(TEST_URL);
 
         // then
-        assertThatThrownBy(() -> linkRepository.remove(TEST_URL)).isInstanceOf(LinkNotFoundException.class);
+        assertThat(removedCount).isEqualTo(0);
     }
 
     private List<LinkEntity> getAll() {

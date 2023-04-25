@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.tinkoff.edu.java.scrapper.exception.LinkNotFoundException;
-import ru.tinkoff.edu.java.scrapper.model.LinkEntity;
+import ru.tinkoff.edu.java.scrapper.domain.LinkEntity;
 import ru.tinkoff.edu.java.scrapper.repository.jooq.JooqLinkRepository;
 import ru.tinkoff.edu.java.scrapper.repository.jooq.JooqSubscriptionRepository;
 import ru.tinkoff.edu.java.scrapper.service.LinkService;
@@ -26,32 +26,28 @@ public class JooqLinkService implements LinkService {
     @Override
     @Transactional
     public LinkEntity add(Long chatId, URI url) {
-        LinkEntity linkEntity;
-        try {
-            linkEntity = linkRepository.find(url.toString());
-        } catch (LinkNotFoundException exception) {
-            Long linkId = linkRepository.add(url.toString());
-            linkEntity = linkRepository.findById(linkId);
-        }
+        LinkEntity link = linkRepository.find(url.toString())
+                .orElseGet(() -> linkRepository.add(url.toString()));
 
-        LinkEntity updatedLink = linkUpdater.update(linkEntity);
+        LinkEntity updatedLink = linkUpdater.update(link);
         linkRepository.save(updatedLink);
-        subscriptionRepository.add(chatId, linkEntity.id());
+        subscriptionRepository.add(chatId, updatedLink.id());
 
-        return linkEntity;
+        return updatedLink;
     }
 
     @Override
     @Transactional
     public LinkEntity remove(Long chatId, URI url) {
-        LinkEntity linkEntity = linkRepository.find(url.toString());
-        subscriptionRepository.remove(chatId, linkEntity.id());
-        int subscriptions = subscriptionRepository.countByLinkId(linkEntity.id());
-        if (subscriptions == 0) {
-            linkRepository.removeById(linkEntity.id());
+        LinkEntity link = linkRepository.find(url.toString())
+                .orElseThrow(() -> new LinkNotFoundException(url.toString()));
+
+        subscriptionRepository.remove(chatId, link.id());
+        if (subscriptionRepository.countByLinkId(link.id()) == 0) {
+            linkRepository.removeById(link.id());
         }
 
-        return linkEntity;
+        return link;
     }
 
     @Override

@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import ru.tinkoff.edu.java.scrapper.dto.UpdateMessage;
 import ru.tinkoff.edu.java.scrapper.dto.client.tgBot.LinkUpdate;
 import ru.tinkoff.edu.java.scrapper.httpclient.TgBotClient;
-import ru.tinkoff.edu.java.scrapper.model.ChatEntity;
+import ru.tinkoff.edu.java.scrapper.domain.ChatEntity;
 
 import java.util.List;
 

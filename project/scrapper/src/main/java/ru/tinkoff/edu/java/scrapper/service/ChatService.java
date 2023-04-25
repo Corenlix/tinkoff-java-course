@@ -1,6 +1,6 @@
 package ru.tinkoff.edu.java.scrapper.service;
 
-import ru.tinkoff.edu.java.scrapper.model.ChatEntity;
+import ru.tinkoff.edu.java.scrapper.domain.ChatEntity;
 
 import java.util.List;
 

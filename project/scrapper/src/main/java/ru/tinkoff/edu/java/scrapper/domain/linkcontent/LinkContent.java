@@ -1,10 +1,7 @@
-package ru.tinkoff.edu.java.scrapper.model.linkcontent;
+package ru.tinkoff.edu.java.scrapper.domain.linkcontent;
 
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import io.swagger.v3.oas.models.links.Link;
 import lombok.SneakyThrows;
 
 public interface LinkContent {

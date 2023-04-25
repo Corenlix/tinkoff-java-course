@@ -1,23 +1,18 @@
 package ru.tinkoff.edu.java.scrapper.repository.jdbc;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.DataClassRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
-import ru.tinkoff.edu.java.scrapper.exception.SubscriptionNotFoundException;
-import ru.tinkoff.edu.java.scrapper.model.LinkEntity;
-import ru.tinkoff.edu.java.scrapper.exception.LinkNotFoundException;
+import ru.tinkoff.edu.java.scrapper.domain.LinkEntity;
 
 import java.sql.PreparedStatement;
-import java.sql.Timestamp;
-import java.time.Duration;
-import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -60,34 +55,24 @@ public class JdbcLinkRepository {
         return keyHolder.getKey().longValue();
     }
 
-    public void save(LinkEntity link) {
-        jdbcTemplate.update(SAVE_QUERY, link.url(), link.contentJson(), link.updatedAt(), link.id());
+    public int save(LinkEntity link) {
+        return jdbcTemplate.update(SAVE_QUERY, link.url(), link.contentJson(), link.updatedAt(), link.id());
     }
 
-    public void remove(String url) {
-        int removedCount = jdbcTemplate.update(REMOVE_QUERY, url);
-        if(removedCount == 0) {
-            throw new LinkNotFoundException(url);
-        }
+    public int remove(String url) {
+        return jdbcTemplate.update(REMOVE_QUERY, url);
     }
 
-    public LinkEntity find(String url) {
-        try {
-            return jdbcTemplate.queryForObject(FIND_QUERY, rowMapper, url);
-        } catch (EmptyResultDataAccessException exception) {
-            throw new LinkNotFoundException(url);
-        }
+    public Optional<LinkEntity> find(String url) {
+        return Optional.ofNullable(jdbcTemplate.queryForObject(FIND_QUERY, rowMapper, url));
     }
 
-    public LinkEntity findById(Long id) {
-        return jdbcTemplate.queryForObject(FIND_BY_ID_QUERY, rowMapper, id);
+    public Optional<LinkEntity> findById(Long id) {
+        return Optional.ofNullable(jdbcTemplate.queryForObject(FIND_BY_ID_QUERY, rowMapper, id));
     }
 
-    public void removeById(Long id) {
-        int removedCount = jdbcTemplate.update(REMOVE_BY_ID_QUERY, id);
-        if (removedCount == 0) {
-            throw new LinkNotFoundException(id);
-        }
+    public int removeById(Long id) {
+        return jdbcTemplate.update(REMOVE_BY_ID_QUERY, id);
     }
 
     public List<LinkEntity> findLinksUpdatedBefore(OffsetDateTime dateTime) {

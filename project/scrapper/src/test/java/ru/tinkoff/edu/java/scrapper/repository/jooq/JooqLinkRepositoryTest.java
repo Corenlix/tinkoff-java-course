@@ -11,9 +11,7 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 import ru.tinkoff.edu.java.scrapper.environment.IntegrationEnvironment;
-import ru.tinkoff.edu.java.scrapper.exception.LinkNotFoundException;
-import ru.tinkoff.edu.java.scrapper.model.LinkEntity;
-import ru.tinkoff.edu.java.scrapper.repository.jdbc.JdbcLinkRepository;
+import ru.tinkoff.edu.java.scrapper.domain.LinkEntity;
 
 import java.sql.PreparedStatement;
 import java.util.List;
@@ -106,13 +104,14 @@ public class JooqLinkRepositoryTest extends IntegrationEnvironment {
     @Test
     @Transactional
     @Rollback
-    void when_remove_notExists_exceptionThrows() {
+    void when_remove_notExists_nothingRemoved() {
         // given
 
         // when
+        int removedCount = linkRepository.remove(TEST_URL);
 
         // then
-        assertThatThrownBy(() -> linkRepository.remove(TEST_URL)).isInstanceOf(LinkNotFoundException.class);
+        assertThat(removedCount).isEqualTo(0);
     }
 
     private List<LinkEntity> getAll() {

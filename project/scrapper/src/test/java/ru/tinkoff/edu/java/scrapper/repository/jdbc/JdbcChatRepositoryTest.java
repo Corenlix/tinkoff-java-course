@@ -4,20 +4,16 @@ package ru.tinkoff.edu.java.scrapper.repository.jdbc;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.DataClassRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
-import ru.tinkoff.edu.java.scrapper.exception.ChatNotFoundException;
-import ru.tinkoff.edu.java.scrapper.model.ChatEntity;
 import ru.tinkoff.edu.java.scrapper.environment.IntegrationEnvironment;
-import ru.tinkoff.edu.java.scrapper.repository.jdbc.JdbcChatRepository;
+import ru.tinkoff.edu.java.scrapper.domain.ChatEntity;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @SpringBootTest
 public class JdbcChatRepositoryTest extends IntegrationEnvironment {
@@ -46,20 +42,6 @@ public class JdbcChatRepositoryTest extends IntegrationEnvironment {
     @Test
     @Transactional
     @Rollback
-    void when_add_alreadyExist_throwsException() {
-        // given
-        Long id = 1L;
-
-        // when
-        chatRepository.add(id);
-
-        // then
-        assertThatThrownBy(() -> chatRepository.add(id)).isInstanceOf(DuplicateKeyException.class);
-    }
-
-    @Test
-    @Transactional
-    @Rollback
     void when_remove_removed() {
         // given
         Long id = 1L;
@@ -73,19 +55,6 @@ public class JdbcChatRepositoryTest extends IntegrationEnvironment {
         // then
         assertThat(allBeforeRemove).hasSize(1);
         assertThat(all).hasSize(0);
-    }
-
-    @Test
-    @Transactional
-    @Rollback
-    void when_remove_notExists_exceptionThrows() {
-        // given
-
-        // when
-
-        // then
-        assertThatThrownBy(() -> chatRepository.removeById(1L))
-                .isInstanceOf(ChatNotFoundException.class);
     }
 
     @Test

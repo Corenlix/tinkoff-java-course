@@ -5,8 +5,7 @@ import org.springframework.jdbc.core.DataClassRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
-import ru.tinkoff.edu.java.scrapper.model.ChatEntity;
-import ru.tinkoff.edu.java.scrapper.exception.ChatNotFoundException;
+import ru.tinkoff.edu.java.scrapper.domain.ChatEntity;
 
 import java.util.List;
 
@@ -24,14 +23,11 @@ public class JdbcChatRepository {
         return jdbcTemplate.query(FIND_ALL_QUERY, rowMapper);
     }
 
-    public void add(Long id) {
-        jdbcTemplate.update(ADD_QUERY, id);
+    public int add(Long id) {
+        return jdbcTemplate.update(ADD_QUERY, id);
     }
 
-    public void removeById(Long id) {
-        int removedCount = jdbcTemplate.update(REMOVE_BY_ID_QUERY, id);
-        if (removedCount == 0) {
-            throw new ChatNotFoundException(id);
-        }
+    public int removeById(Long id) {
+        return jdbcTemplate.update(REMOVE_BY_ID_QUERY, id);
     }
 }

@@ -1,4 +1,4 @@
-package ru.tinkoff.edu.java.scrapper.model.linkcontent;
+package ru.tinkoff.edu.java.scrapper.domain.linkcontent;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

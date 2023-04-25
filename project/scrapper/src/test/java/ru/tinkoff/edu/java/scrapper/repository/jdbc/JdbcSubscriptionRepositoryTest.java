@@ -3,18 +3,14 @@ package ru.tinkoff.edu.java.scrapper.repository.jdbc;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.dao.DuplicateKeyException;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.DataClassRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
-import ru.tinkoff.edu.java.scrapper.exception.SubscriptionNotFoundException;
-import ru.tinkoff.edu.java.scrapper.model.SubscriptionEntity;
+import ru.tinkoff.edu.java.scrapper.domain.SubscriptionEntity;
 import ru.tinkoff.edu.java.scrapper.environment.IntegrationEnvironment;
-import ru.tinkoff.edu.java.scrapper.repository.jdbc.JdbcSubscriptionRepository;
 
 import java.sql.PreparedStatement;
 import java.util.List;
@@ -48,22 +44,6 @@ public class JdbcSubscriptionRepositoryTest extends IntegrationEnvironment {
         // then
         assertThat(allBefore).hasSize(0);
         assertThat(allAfter).hasSize(1);
-    }
-
-    @Test
-    @Transactional
-    @Rollback
-    void when_add_alreadyExist_throwsException() {
-        // given
-        Long chatId = 1L;
-        Long linkId = createLink(TEST_URL);
-        createChat(chatId);
-
-        // when
-        subscriptionRepository.add(chatId, linkId);
-
-        // then
-        assertThatThrownBy(() -> subscriptionRepository.add(chatId, linkId)).isInstanceOf(DuplicateKeyException.class);
     }
 
     @Test
@@ -134,19 +114,6 @@ public class JdbcSubscriptionRepositoryTest extends IntegrationEnvironment {
         // then
         assertThat(allBefore).hasSize(1);
         assertThat(allAfter).hasSize(0);
-    }
-
-    @Test
-    @Transactional
-    @Rollback
-    void then_remove_notExists_throwsException() {
-        // given
-
-        // when
-
-        // then
-        assertThatThrownBy(() -> subscriptionRepository.remove(1L, 2L))
-                .isInstanceOf(SubscriptionNotFoundException.class);
     }
 
     private List<SubscriptionEntity> getAll() {

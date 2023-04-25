@@ -6,10 +6,9 @@ import org.springframework.stereotype.Repository;
 import ru.tinkoff.edu.java.scrapper.domain.jooq.tables.Chat;
 import ru.tinkoff.edu.java.scrapper.domain.jooq.tables.Link;
 import ru.tinkoff.edu.java.scrapper.domain.jooq.tables.Subscription;
-import ru.tinkoff.edu.java.scrapper.exception.SubscriptionNotFoundException;
-import ru.tinkoff.edu.java.scrapper.model.ChatEntity;
-import ru.tinkoff.edu.java.scrapper.model.LinkEntity;
-import ru.tinkoff.edu.java.scrapper.model.SubscriptionEntity;
+import ru.tinkoff.edu.java.scrapper.domain.ChatEntity;
+import ru.tinkoff.edu.java.scrapper.domain.LinkEntity;
+import ru.tinkoff.edu.java.scrapper.domain.SubscriptionEntity;
 
 import java.util.List;
 
@@ -23,8 +22,8 @@ public class JooqSubscriptionRepository {
     private final Chat chat = Chat.CHAT;
     private final Link link = Link.LINK;
 
-    public void add(Long chatId, Long linkId) {
-        context.insertInto(subscription)
+    public int add(Long chatId, Long linkId) {
+        return context.insertInto(subscription)
                 .set(subscription.CHAT_ID, chatId)
                 .set(subscription.LINK_ID, linkId)
                 .execute();
@@ -59,18 +58,15 @@ public class JooqSubscriptionRepository {
                 .fetchInto(LinkEntity.class);
     }
 
-    public void remove(Long chatId, Long linkId) {
-        int removedCount = context.delete(subscription)
+    public int remove(Long chatId, Long linkId) {
+        return context.delete(subscription)
                 .where(subscription.CHAT_ID.eq(chatId)
                         .and(subscription.LINK_ID.eq(linkId)))
                 .execute();
-
-        if (removedCount == 0)
-            throw new SubscriptionNotFoundException(chatId, linkId);
     }
 
-    public void removeLinksWithoutSubscribers() {
-        context.delete(link)
+    public int removeLinksWithoutSubscribers() {
+        return context.delete(link)
                 .where(link.ID.in(
                         select(link.ID).from(link)
                                 .leftOuterJoin(subscription)

@@ -7,7 +7,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import ru.tinkoff.edu.java.scrapper.dto.controller.ApiErrorResponse;
-import ru.tinkoff.edu.java.scrapper.model.LinkEntity;
+import ru.tinkoff.edu.java.scrapper.domain.LinkEntity;
 import ru.tinkoff.edu.java.scrapper.dto.controller.links.LinkResponse;
 import ru.tinkoff.edu.java.scrapper.dto.controller.links.ListLinksResponse;
 import ru.tinkoff.edu.java.scrapper.dto.controller.links.RemoveLinkRequest;

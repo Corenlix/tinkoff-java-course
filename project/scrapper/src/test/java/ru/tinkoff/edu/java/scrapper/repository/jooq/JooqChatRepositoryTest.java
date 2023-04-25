@@ -10,9 +10,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 import ru.tinkoff.edu.java.scrapper.environment.IntegrationEnvironment;
-import ru.tinkoff.edu.java.scrapper.exception.ChatNotFoundException;
-import ru.tinkoff.edu.java.scrapper.model.ChatEntity;
-import ru.tinkoff.edu.java.scrapper.repository.jdbc.JdbcChatRepository;
+import ru.tinkoff.edu.java.scrapper.domain.ChatEntity;
 
 import java.util.List;
 
@@ -73,19 +71,6 @@ public class JooqChatRepositoryTest extends IntegrationEnvironment {
         // then
         assertThat(allBeforeRemove).hasSize(1);
         assertThat(all).hasSize(0);
-    }
-
-    @Test
-    @Transactional
-    @Rollback
-    void when_remove_notExists_exceptionThrows() {
-        // given
-
-        // when
-
-        // then
-        assertThatThrownBy(() -> chatRepository.removeById(1L))
-                .isInstanceOf(ChatNotFoundException.class);
     }
 
     @Test
