@@ -1,7 +1,6 @@
 package ru.tinkoff.edu.java.scrapper.service.jdbc;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.tinkoff.edu.java.scrapper.domain.LinkEntity;
 import ru.tinkoff.edu.java.scrapper.exception.LinkNotFoundException;
@@ -14,7 +13,6 @@ import java.net.URI;
 import java.time.OffsetDateTime;
 import java.util.List;
 
-@Service
 @RequiredArgsConstructor
 public class JdbcLinkService implements LinkService {
     private final JdbcSubscriptionRepository subscriptionRepository;

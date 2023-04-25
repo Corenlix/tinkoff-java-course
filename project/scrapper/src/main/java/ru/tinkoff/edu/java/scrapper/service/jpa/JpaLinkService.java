@@ -2,7 +2,6 @@ package ru.tinkoff.edu.java.scrapper.service.jpa;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 import ru.tinkoff.edu.java.scrapper.domain.LinkEntity;
 import ru.tinkoff.edu.java.scrapper.domain.jpa.JpaChatEntity;
 import ru.tinkoff.edu.java.scrapper.domain.jpa.JpaLinkEntity;
@@ -17,9 +16,7 @@ import ru.tinkoff.edu.java.scrapper.service.LinkUpdater;
 import java.net.URI;
 import java.time.OffsetDateTime;
 import java.util.List;
-import java.util.Optional;
 
-@Service
 @RequiredArgsConstructor
 public class JpaLinkService implements LinkService {
 
@@ -31,7 +28,8 @@ public class JpaLinkService implements LinkService {
     @Override
     @Transactional
     public LinkEntity add(Long chatId, URI url) {
-        JpaChatEntity chat = chatRepository.findById(chatId).orElseThrow(() -> new ChatNotFoundException(chatId));
+        JpaChatEntity chat = chatRepository.findById(chatId)
+                .orElseThrow(() -> new ChatNotFoundException(chatId));
 
         JpaLinkEntity linkEntity = linkRepository.findByUrl(url.toString()).orElseGet(() -> {
             JpaLinkEntity entityToSave = new JpaLinkEntity();

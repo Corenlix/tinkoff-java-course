@@ -1,7 +1,6 @@
 package ru.tinkoff.edu.java.scrapper.service.jpa;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.tinkoff.edu.java.scrapper.domain.ChatEntity;
 import ru.tinkoff.edu.java.scrapper.domain.jpa.JpaChatEntity;
@@ -14,7 +13,6 @@ import ru.tinkoff.edu.java.scrapper.service.ChatService;
 
 import java.util.List;
 
-@Service
 @RequiredArgsConstructor
 public class JpaChatService implements ChatService {
 

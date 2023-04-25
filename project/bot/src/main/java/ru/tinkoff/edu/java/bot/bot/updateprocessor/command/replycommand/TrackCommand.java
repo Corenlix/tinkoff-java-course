@@ -36,7 +36,7 @@ public class TrackCommand extends ReplyCommand {
         try {
             AddLinkRequest request = new AddLinkRequest(link);
             scrapperClient.addLink(update.message().chat().id(), request);
-        } catch (WebClientResponseException.BadRequest ex) {
+        } catch (WebClientResponseException ex) {
             log.error("Ошибка при добавлении ссылки в список отслеживаемых!", ex);
             return new SendMessage(update.message().chat().id(), "При добавлении ссылки в список отслеживаемых произошла ошибка :с");
         }

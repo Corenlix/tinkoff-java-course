@@ -3,6 +3,7 @@ package ru.tinkoff.edu.java.scrapper.domain.jpa;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -20,9 +21,9 @@ public class JpaChatEntity {
 
     @ManyToMany
     @JoinTable(name = "subscription",
-            joinColumns = @JoinColumn(name = "link_id",
+            joinColumns = @JoinColumn(name = "chat_id",
                     referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "chat_id",
+            inverseJoinColumns = @JoinColumn(name = "link_id",
                     referencedColumnName = "id"))
-    private List<JpaLinkEntity> links;
+    private List<JpaLinkEntity> links = new ArrayList<>();
 }

@@ -7,6 +7,7 @@ import org.hibernate.annotations.Type;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -33,9 +34,9 @@ public class JpaLinkEntity {
 
     @ManyToMany
     @JoinTable(name="subscription",
-            joinColumns = @JoinColumn(name = "chat_id",
+            joinColumns = @JoinColumn(name = "link_id",
                     referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "link_id",
+            inverseJoinColumns = @JoinColumn(name = "chat_id",
                     referencedColumnName = "id"))
-    private List<JpaChatEntity> chats;
+    private List<JpaChatEntity> chats = new ArrayList<>();
 }
