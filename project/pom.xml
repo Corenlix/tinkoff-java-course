@@ -15,9 +15,18 @@
         <openapi-webmvc-ui-version>2.0.2</openapi-webmvc-ui-version>
         <telegram-api-version>6.5.0</telegram-api-version>
         <testcontainers.version>1.18.0</testcontainers.version>
+        <mapstruct.version>1.5.4.Final</mapstruct.version>
+        <mapstruct-lombok.version>0.2.0</mapstruct-lombok.version>
+        <lombok.version>1.18.26</lombok.version>
+        <jooq-meta-extensions-liquibase.version>3.18.3</jooq-meta-extensions-liquibase.version>
     </properties>
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.jooq</groupId>
+                <artifactId>jooq-meta-extensions-liquibase</artifactId>
+                <version>${jooq-meta-extensions-liquibase.version}</version>
+            </dependency>
             <dependency>
                 <groupId>com.github.pengrad</groupId>
                 <artifactId>java-telegram-bot-api</artifactId>
@@ -49,6 +58,26 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct</artifactId>
+                <version>${mapstruct.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mapstruct.extensions</groupId>
+                <artifactId>mapstruct-lombok</artifactId>
+                <version>1.5.0.Final</version>
+            </dependency>
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok-mapstruct-binding</artifactId>
+                <version>${mapstruct-lombok.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
     <dependencies>
@@ -63,6 +92,7 @@
         <module>bot</module>
         <module>link-parser</module>
         <module>scrapper</module>
+        <module>scrapper-jooq</module>
     </modules>
     <build>
         <pluginManagement>

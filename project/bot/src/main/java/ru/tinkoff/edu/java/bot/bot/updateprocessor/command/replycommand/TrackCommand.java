@@ -3,6 +3,7 @@ package ru.tinkoff.edu.java.bot.bot.updateprocessor.command.replycommand;
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.SendMessage;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 import ru.tinkoff.edu.java.bot.dto.scrapper.AddLinkRequest;
@@ -10,6 +11,7 @@ import ru.tinkoff.edu.java.bot.httpclient.ScrapperClient;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class TrackCommand extends ReplyCommand {
     private final ScrapperClient scrapperClient;
 
@@ -35,6 +37,7 @@ public class TrackCommand extends ReplyCommand {
             AddLinkRequest request = new AddLinkRequest(link);
             scrapperClient.addLink(update.message().chat().id(), request);
         } catch (WebClientResponseException.BadRequest ex) {
+            log.error("Ошибка при добавлении ссылки в список отслеживаемых!", ex);
             return new SendMessage(update.message().chat().id(), "При добавлении ссылки в список отслеживаемых произошла ошибка :с");
         }
 

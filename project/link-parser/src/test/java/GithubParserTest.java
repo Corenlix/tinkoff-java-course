@@ -1,5 +1,5 @@
-import ParseProcessor.GitHubProcessor;
-import ParseResponse.GitHubResponse;
+import parseprocessor.GitHubProcessor;
+import parseresponse.GitHubResponse;
 import org.junit.jupiter.api.Test;
 
 import java.net.URI;

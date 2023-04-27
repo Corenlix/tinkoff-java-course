@@ -3,8 +3,8 @@ package ru.tinkoff.edu.java.scrapper.httpclient;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.reactive.function.client.WebClient;
-import ru.tinkoff.edu.java.scrapper.dto.stackexchange.StackExchangeQuestionResponse;
-import ru.tinkoff.edu.java.scrapper.dto.stackexchange.StackExchangeQuestionsResponse;
+import ru.tinkoff.edu.java.scrapper.dto.client.stackexchange.StackExchangeQuestionResponse;
+import ru.tinkoff.edu.java.scrapper.dto.client.stackexchange.StackExchangeQuestionsResponse;
 
 import java.util.Arrays;
 import java.util.stream.Stream;

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--suppress XmlUnusedNamespaceDeclaration -->
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd
+       http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <include file="db-init/create_chat_table.sql" relativeToChangelogFile="true"/>
+    <include file="db-init/create_link_table.sql" relativeToChangelogFile="true"/>
+    <include file="db-init/create_chat-link_table.sql" relativeToChangelogFile="true"/>
+    <include file="db-init/rename_chat-link_table_to_subscription_table.sql" relativeToChangelogFile="true"/>
+    <include file="db-init/add_cascade_to_subscription_table.sql" relativeToChangelogFile="true"/>
+    <include file="db-init/create_link_id_sequence.sql" relativeToChangelogFile="true"/>
+    <include file="db-init/add_unique_constraint_and_index_to_link_url.sql" relativeToChangelogFile="true"/>
+    <include file="db-init/add_field_content_json_into_link.sql" relativeToChangelogFile="true"/>
+    <include file="db-init/change_date_type.sql" relativeToChangelogFile="true"/>
+</databaseChangeLog>
