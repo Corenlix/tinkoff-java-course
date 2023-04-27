@@ -1,0 +1,1 @@
+ALTER TABLE link ADD content_json JSON;

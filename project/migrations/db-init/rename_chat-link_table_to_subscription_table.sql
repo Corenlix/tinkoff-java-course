@@ -1,0 +1,1 @@
+ALTER TABLE chat_link RENAME TO subscription;
