@@ -39,6 +39,7 @@ public class JpaChatService implements ChatService {
     @Override
     public List<ChatEntity> findByLink(String url) {
         JpaLinkEntity link = linkRepository.findByUrl(url).orElseThrow(() -> new LinkNotFoundException(url));
-        return chatMapper.toChatsList(link.getChats().stream().toList());
+        List<JpaChatEntity> chats = chatRepository.findByLinksId(link.getId());
+        return chatMapper.toChatsList(chats.stream().toList());
     }
 }

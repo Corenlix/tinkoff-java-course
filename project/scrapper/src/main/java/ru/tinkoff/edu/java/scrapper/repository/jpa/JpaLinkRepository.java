@@ -15,4 +15,6 @@ public interface JpaLinkRepository extends JpaRepository<JpaLinkEntity, Long> {
 
     @Query(value = "SELECT l FROM JpaLinkEntity l where l.updatedAt < ?1")
     List<JpaLinkEntity> findUpdatedBefore(OffsetDateTime dateTime);
+
+    List<JpaLinkEntity> findByChatsId(Long chatId);
 }

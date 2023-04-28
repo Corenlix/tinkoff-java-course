@@ -38,6 +38,7 @@ public class JpaLinkService implements LinkService {
         });
 
         JpaLinkEntity updatedLink = linkMapper.toJpaLink(linkUpdater.update(linkMapper.toLink(linkEntity)));
+        linkEntity.setChats(chatRepository.findByLinksId(linkEntity.getId()));
         if (!linkEntity.getChats().contains(chat)) {
             updatedLink.getChats().add(chat);
         }
@@ -51,6 +52,7 @@ public class JpaLinkService implements LinkService {
     public LinkEntity remove(Long chatId, URI url) {
         JpaLinkEntity linkEntity = linkRepository.findByUrl(url.toString()).orElseThrow(() -> new LinkNotFoundException(url.toString()));
         JpaChatEntity chatEntity = chatRepository.findById(chatId).orElseThrow(() -> new ChatNotFoundException(chatId));
+        linkEntity.setChats(chatRepository.findByLinksId(linkEntity.getId()));
         linkEntity.getChats().remove(chatEntity);
         linkRepository.save(linkEntity);
 
@@ -59,8 +61,8 @@ public class JpaLinkService implements LinkService {
 
     @Override
     public List<LinkEntity> findByChatId(Long chatId) {
-        JpaChatEntity chat = chatRepository.findById(chatId).orElseThrow(() -> new ChatNotFoundException(chatId));
-        return linkMapper.toLinksList(chat.getLinks());
+        List<JpaLinkEntity> links = linkRepository.findByChatsId(chatId);
+        return linkMapper.toLinksList(links);
     }
 
     @Override
