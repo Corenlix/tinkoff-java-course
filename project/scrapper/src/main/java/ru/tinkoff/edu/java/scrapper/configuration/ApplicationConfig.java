@@ -14,5 +14,6 @@ public record ApplicationConfig(@NotNull URI githubApiPath,
                                 @NotNull String stackOverflowApiVersion,
                                 @NotNull Duration schedulerInterval,
                                 @NotNull Duration linkUpdateInterval,
-                                @NotNull URI tgBotPath) {
+                                @NotNull URI tgBotPath,
+                                @NotNull AccessType databaseAccessType) {
 }
