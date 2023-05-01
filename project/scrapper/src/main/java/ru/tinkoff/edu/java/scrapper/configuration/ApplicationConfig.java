@@ -18,6 +18,7 @@ public record ApplicationConfig(@NotNull URI githubApiPath,
                                 @NotNull AccessType databaseAccessType,
                                 @NotNull String rabbitQueueName,
                                 @NotNull String rabbitRoutingKey,
-                                @NotNull String rabbitExchangeName
+                                @NotNull String rabbitExchangeName,
+                                @NotNull boolean useQueue
                                 ) {
 }
