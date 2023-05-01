@@ -15,5 +15,9 @@ public record ApplicationConfig(@NotNull URI githubApiPath,
                                 @NotNull Duration schedulerInterval,
                                 @NotNull Duration linkUpdateInterval,
                                 @NotNull URI tgBotPath,
-                                @NotNull AccessType databaseAccessType) {
+                                @NotNull AccessType databaseAccessType,
+                                @NotNull String rabbitQueueName,
+                                @NotNull String rabbitRoutingKey,
+                                @NotNull String rabbitExchangeName
+                                ) {
 }
