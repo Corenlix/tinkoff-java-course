@@ -10,13 +10,14 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 import ru.tinkoff.edu.java.scrapper.environment.IntegrationEnvironment;
 import ru.tinkoff.edu.java.scrapper.domain.ChatEntity;
+import ru.tinkoff.edu.java.scrapper.environment.JdbcIntegrationEnvironment;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
-public class JdbcChatRepositoryTest extends IntegrationEnvironment {
+public class JdbcChatRepositoryTest extends JdbcIntegrationEnvironment {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 

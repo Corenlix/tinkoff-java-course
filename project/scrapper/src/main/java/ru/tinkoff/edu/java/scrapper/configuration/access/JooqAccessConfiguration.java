@@ -1,5 +1,6 @@
 package ru.tinkoff.edu.java.scrapper.configuration.access;
 
+import org.jooq.DSLContext;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,6 +16,22 @@ import ru.tinkoff.edu.java.scrapper.service.jooq.JooqLinkService;
 @Configuration
 @ConditionalOnProperty(prefix = "app", name = "database-access-type", havingValue = "jooq")
 public class JooqAccessConfiguration {
+
+    @Bean
+    public JooqLinkRepository jooqLinkRepository(DSLContext dslContext) {
+        return new JooqLinkRepository(dslContext);
+    }
+
+    @Bean
+    public JooqChatRepository jooqChatRepository(DSLContext dslContext) {
+        return new JooqChatRepository(dslContext);
+    }
+
+    @Bean
+    public JooqSubscriptionRepository jooqSubscriptionRepository(DSLContext dslContext) {
+        return new JooqSubscriptionRepository(dslContext);
+    }
+
     @Bean
     public LinkService linkService(
             JooqLinkRepository linkRepository,

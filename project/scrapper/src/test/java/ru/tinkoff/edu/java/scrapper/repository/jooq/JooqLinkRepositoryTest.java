@@ -12,6 +12,7 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 import ru.tinkoff.edu.java.scrapper.environment.IntegrationEnvironment;
 import ru.tinkoff.edu.java.scrapper.domain.LinkEntity;
+import ru.tinkoff.edu.java.scrapper.environment.JooqIntegrationEnvironment;
 
 import java.sql.PreparedStatement;
 import java.util.List;
@@ -19,7 +20,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @SpringBootTest
-public class JooqLinkRepositoryTest extends IntegrationEnvironment {
+public class JooqLinkRepositoryTest extends JooqIntegrationEnvironment {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 

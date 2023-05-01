@@ -3,6 +3,7 @@ package ru.tinkoff.edu.java.scrapper.configuration.access;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import ru.tinkoff.edu.java.scrapper.mapper.ChatMapper;
 import ru.tinkoff.edu.java.scrapper.mapper.LinkMapper;
 import ru.tinkoff.edu.java.scrapper.repository.jdbc.JdbcChatRepository;
 import ru.tinkoff.edu.java.scrapper.repository.jdbc.JdbcLinkRepository;
@@ -13,6 +14,7 @@ import ru.tinkoff.edu.java.scrapper.service.ChatService;
 import ru.tinkoff.edu.java.scrapper.service.LinkService;
 import ru.tinkoff.edu.java.scrapper.service.LinkUpdater;
 import ru.tinkoff.edu.java.scrapper.service.jdbc.JdbcChatService;
+import ru.tinkoff.edu.java.scrapper.service.jpa.JpaChatService;
 import ru.tinkoff.edu.java.scrapper.service.jpa.JpaLinkService;
 
 @Configuration
@@ -30,10 +32,10 @@ public class JpaAccessConfiguration {
 
     @Bean
     public ChatService chatService(
-            JdbcChatRepository chatRepository,
-            JdbcLinkRepository linkRepository,
-            JdbcSubscriptionRepository subscriptionRepository
+            JpaChatRepository chatRepository,
+            JpaLinkRepository linkRepository,
+            ChatMapper chatMapper
     ) {
-        return new JdbcChatService(chatRepository, linkRepository, subscriptionRepository);
+        return new JpaChatService(chatRepository, linkRepository, chatMapper);
     }
 }

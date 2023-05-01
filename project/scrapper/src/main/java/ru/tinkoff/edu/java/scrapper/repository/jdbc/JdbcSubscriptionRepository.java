@@ -11,7 +11,6 @@ import ru.tinkoff.edu.java.scrapper.domain.SubscriptionEntity;
 
 import java.util.List;
 
-@Repository
 @RequiredArgsConstructor
 public class JdbcSubscriptionRepository {
     private final JdbcTemplate jdbcTemplate;

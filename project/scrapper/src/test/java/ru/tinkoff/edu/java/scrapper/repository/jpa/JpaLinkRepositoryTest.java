@@ -14,6 +14,7 @@ import ru.tinkoff.edu.java.scrapper.domain.jpa.JpaChatEntity;
 import ru.tinkoff.edu.java.scrapper.domain.jpa.JpaLinkEntity;
 import ru.tinkoff.edu.java.scrapper.environment.IntegrationEnvironment;
 import ru.tinkoff.edu.java.scrapper.domain.ChatEntity;
+import ru.tinkoff.edu.java.scrapper.environment.JpaIntegrationEnvironment;
 import ru.tinkoff.edu.java.scrapper.repository.jpa.JpaChatRepository;
 
 import java.sql.PreparedStatement;
@@ -23,7 +24,7 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
-public class JpaLinkRepositoryTest extends IntegrationEnvironment {
+public class JpaLinkRepositoryTest extends JpaIntegrationEnvironment {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 

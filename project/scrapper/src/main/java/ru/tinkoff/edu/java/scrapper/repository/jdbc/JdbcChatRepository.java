@@ -9,7 +9,6 @@ import ru.tinkoff.edu.java.scrapper.domain.ChatEntity;
 
 import java.util.List;
 
-@Repository
 @RequiredArgsConstructor
 public class JdbcChatRepository {
     private final JdbcTemplate jdbcTemplate;

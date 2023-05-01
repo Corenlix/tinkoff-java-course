@@ -11,6 +11,7 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 import ru.tinkoff.edu.java.scrapper.domain.SubscriptionEntity;
 import ru.tinkoff.edu.java.scrapper.environment.IntegrationEnvironment;
+import ru.tinkoff.edu.java.scrapper.environment.JdbcIntegrationEnvironment;
 
 import java.sql.PreparedStatement;
 import java.util.List;
@@ -18,7 +19,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @SpringBootTest
-public class JdbcSubscriptionRepositoryTest extends IntegrationEnvironment {
+public class JdbcSubscriptionRepositoryTest extends JdbcIntegrationEnvironment {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 

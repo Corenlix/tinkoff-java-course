@@ -11,13 +11,14 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 import ru.tinkoff.edu.java.scrapper.environment.IntegrationEnvironment;
 import ru.tinkoff.edu.java.scrapper.domain.LinkEntity;
+import ru.tinkoff.edu.java.scrapper.environment.JdbcIntegrationEnvironment;
 
 import java.sql.PreparedStatement;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
-public class JdbcLinkRepositoryTest extends IntegrationEnvironment {
+public class JdbcLinkRepositoryTest extends JdbcIntegrationEnvironment {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 

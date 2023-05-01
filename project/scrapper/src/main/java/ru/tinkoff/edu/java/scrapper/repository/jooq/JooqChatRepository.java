@@ -8,7 +8,6 @@ import ru.tinkoff.edu.java.scrapper.domain.ChatEntity;
 
 import java.util.List;
 
-@Repository
 @RequiredArgsConstructor
 public class JooqChatRepository {
     private final DSLContext context;

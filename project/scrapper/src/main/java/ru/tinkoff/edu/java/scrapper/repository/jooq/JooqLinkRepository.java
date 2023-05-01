@@ -11,7 +11,6 @@ import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Optional;
 
-@Repository
 @RequiredArgsConstructor
 public class JooqLinkRepository {
     private final DSLContext context;

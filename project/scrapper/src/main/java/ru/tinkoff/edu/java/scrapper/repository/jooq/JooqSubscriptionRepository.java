@@ -14,7 +14,6 @@ import java.util.List;
 
 import static org.jooq.impl.DSL.select;
 
-@Repository
 @RequiredArgsConstructor
 public class JooqSubscriptionRepository {
     private final DSLContext context;
