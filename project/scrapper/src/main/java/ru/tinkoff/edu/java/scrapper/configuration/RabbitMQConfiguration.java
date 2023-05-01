@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class RabbitMQConfiguration {
-    private final static String DLX = ".dlq";
+    private final static String DLQ = ".dlq";
 
     @Bean
     public MessageConverter jsonMessageConverter() {
@@ -24,8 +24,8 @@ public class RabbitMQConfiguration {
     public Queue queue(ApplicationConfig config) {
         return QueueBuilder
                 .durable(config.rabbitQueueName())
-                .withArgument("x-dead-letter-exchange", config.rabbitExchangeName() + DLX)
-                .withArgument("x-dead-letter-routing-key", config.rabbitRoutingKey() + DLX)
+                .withArgument("x-dead-letter-exchange", config.rabbitExchangeName() + DLQ)
+                .withArgument("x-dead-letter-routing-key", config.rabbitRoutingKey() + DLQ)
                 .build();
     }
 
