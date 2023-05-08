@@ -40,6 +40,13 @@ jobs:
         working-directory: ./project
         run: mvn package -pl scrapper -am
 
+      - name: Lowercase actor
+        uses: actions/github-script@v6
+        id: lowercase_actor
+        with:
+          result-encoding: string
+          script: return '{{ github.actor }}'.toLowerCase()
+
       - name: Log in to Docker Hub
         uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
         with:
@@ -48,7 +55,8 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build Image
-        run: docker build -t ${{ env.REGISTRY }}/${{ github.actor }}/${{ env.IMAGE_NAME }} . -f scrapper/scrapper.Dockerfile
+        working-directory: ./project
+        run: docker build -t ${{ env.REGISTRY }}/${{ steps.lowercase_actor.outputs.result }}/${{ env.IMAGE_NAME }} . -f scrapper/Dockerfile
 
       - name: Push Docker image
-        run: docker push ${{ env.REGISTRY }}/${{ github.actor }}/${{ env.IMAGE_NAME }}
+        run: docker push ${{ env.REGISTRY }}/${{ steps.lowercase_actor.outputs.result }}/${{ env.IMAGE_NAME }}
