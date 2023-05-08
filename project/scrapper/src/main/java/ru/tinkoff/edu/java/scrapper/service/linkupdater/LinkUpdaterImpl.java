@@ -8,10 +8,12 @@ import parseresponse.ParseResponse;
 import ru.tinkoff.edu.java.scrapper.dto.UpdateMessage;
 import ru.tinkoff.edu.java.scrapper.domain.LinkEntity;
 import ru.tinkoff.edu.java.scrapper.domain.linkcontent.LinkContent;
+import ru.tinkoff.edu.java.scrapper.dto.client.tgBot.LinkUpdate;
 import ru.tinkoff.edu.java.scrapper.service.LinkUpdater;
-import ru.tinkoff.edu.java.scrapper.service.UpdateMessagesSender;
+import ru.tinkoff.edu.java.scrapper.service.UpdateMessageFactory;
 import ru.tinkoff.edu.java.scrapper.service.linkupdater.linkhandler.LinkHandler;
 import ru.tinkoff.edu.java.scrapper.service.linkupdater.linkhandler.LinkHandlerChain;
+import ru.tinkoff.edu.java.scrapper.service.updatesender.UpdateSender;
 
 import java.net.URI;
 import java.time.OffsetDateTime;
@@ -22,7 +24,8 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 public class LinkUpdaterImpl implements LinkUpdater {
-    private final UpdateMessagesSender updateMessagesSender;
+    private final UpdateMessageFactory updateMessageFactory;
+    private final UpdateSender updateSender;
     private final LinkHandlerChain linkHandlerChain;
     private final LinkParser linkParser;
 
@@ -38,7 +41,8 @@ public class LinkUpdaterImpl implements LinkUpdater {
     private void sendUpdatesIfAvailable(LinkEntity link, LinkHandler handler, LinkContent currentLinkContent) {
         List<UpdateMessage> updateMessages = getAvailableUpdates(link, handler, currentLinkContent);
         if(!updateMessages.isEmpty()) {
-            updateMessagesSender.sendUpdates(updateMessages, link.url());
+            LinkUpdate linkUpdate = updateMessageFactory.getLinkUpdate(updateMessages, link.url());
+            updateSender.sendUpdate(linkUpdate);
         }
     }
 
