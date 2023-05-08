@@ -8,5 +8,12 @@ import java.net.URI;
 
 @Validated
 @ConfigurationProperties(prefix = "app", ignoreUnknownFields = false)
-public record ApplicationConfig(@NotNull String test, @NotNull String telegramToken, @NotNull URI scrapperPath) {
+public record ApplicationConfig(
+        @NotNull String test,
+        @NotNull String telegramToken,
+        @NotNull URI scrapperPath,
+        @NotNull String rabbitQueueName,
+        @NotNull String rabbitRoutingKey,
+        @NotNull String rabbitExchangeName
+) {
 }
