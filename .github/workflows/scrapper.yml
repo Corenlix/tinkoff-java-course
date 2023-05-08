@@ -25,10 +25,13 @@ jobs:
           cache: maven
 
       - name: Maven build JOOQ
-        run: cd project && mvn package -pl scrapper-jooq -am
+        working-directory: ./project
+        run: mvn package -pl scrapper-jooq -am
 
       - name: Generate JOOQ
-        run: java -jar project/scrapper-jooq/target/*.jar
+        working-directory: ./project
+        run: java -jar scrapper-jooq/target/*.jar
 
       - name: Maven build Scrapper
-        run: cd project && mvn package -pl scrapper -am
+        working-directory: ./project
+        run: mvn package -pl scrapper -am
