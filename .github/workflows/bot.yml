@@ -22,4 +22,5 @@ jobs:
           cache: maven
 
       - name: Maven build
-        run: cd project && mvn package -pl bot -am
+        working-directory: ./project
+        run: mvn package -pl bot -am
