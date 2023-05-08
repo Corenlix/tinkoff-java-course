@@ -1,13 +1,12 @@
 package ru.tinkoff.edu.java.scrapper.service;
 
-import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import ru.tinkoff.edu.java.scrapper.configuration.ApplicationConfig;
+import ru.tinkoff.edu.java.scrapper.domain.ChatEntity;
 import ru.tinkoff.edu.java.scrapper.dto.UpdateMessage;
 import ru.tinkoff.edu.java.scrapper.dto.client.tgBot.LinkUpdate;
 import ru.tinkoff.edu.java.scrapper.httpclient.TgBotClient;
-import ru.tinkoff.edu.java.scrapper.domain.ChatEntity;
 
 import java.util.List;
 
@@ -18,11 +17,14 @@ public class UpdateMessagesSender {
     private final ChatService chatService;
     private final boolean useQueue;
 
-    public UpdateMessagesSender(ScrapperQueueProducer scrapperQueueProducer, TgBotClient tgBotClient, ChatService chatService, ApplicationConfig applicationConfig) {
+    public UpdateMessagesSender(ScrapperQueueProducer scrapperQueueProducer,
+                                TgBotClient tgBotClient,
+                                ChatService chatService,
+                                @Value("${app.use-queue:true}") Boolean useQueue) {
         this.scrapperQueueProducer = scrapperQueueProducer;
         this.tgBotClient = tgBotClient;
         this.chatService = chatService;
-        this.useQueue = applicationConfig.useQueue();
+        this.useQueue = useQueue;
     }
 
     public void sendUpdates(List<UpdateMessage> updateMessages, String url) {
