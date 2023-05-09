@@ -19,6 +19,7 @@
         <mapstruct-lombok.version>0.2.0</mapstruct-lombok.version>
         <lombok.version>1.18.26</lombok.version>
         <jooq-meta-extensions-liquibase.version>3.18.3</jooq-meta-extensions-liquibase.version>
+        <checkstyle.version>3.2.2</checkstyle.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -128,6 +129,14 @@
                     <configuration>
                         <release>17</release>
                         <parameters>true</parameters>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-checkstyle-plugin</artifactId>
+                    <version>${checkstyle.version}</version>
+                    <configuration>
+                        <configLocation>checkstyle.xml</configLocation>
                     </configuration>
                 </plugin>
             </plugins>

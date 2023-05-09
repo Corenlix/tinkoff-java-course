@@ -1,5 +1,8 @@
 package ru.tinkoff.edu.java.scrapper.service.jdbc;
 
+import java.net.URI;
+import java.time.OffsetDateTime;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 import ru.tinkoff.edu.java.scrapper.domain.LinkEntity;
@@ -8,10 +11,6 @@ import ru.tinkoff.edu.java.scrapper.repository.jdbc.JdbcLinkRepository;
 import ru.tinkoff.edu.java.scrapper.repository.jdbc.JdbcSubscriptionRepository;
 import ru.tinkoff.edu.java.scrapper.service.LinkService;
 import ru.tinkoff.edu.java.scrapper.service.LinkUpdater;
-
-import java.net.URI;
-import java.time.OffsetDateTime;
-import java.util.List;
 
 @RequiredArgsConstructor
 public class JdbcLinkService implements LinkService {

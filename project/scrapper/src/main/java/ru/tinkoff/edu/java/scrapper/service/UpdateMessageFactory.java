@@ -1,12 +1,11 @@
 package ru.tinkoff.edu.java.scrapper.service;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.tinkoff.edu.java.scrapper.domain.ChatEntity;
 import ru.tinkoff.edu.java.scrapper.dto.UpdateMessage;
 import ru.tinkoff.edu.java.scrapper.dto.client.tgBot.LinkUpdate;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor

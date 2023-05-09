@@ -30,9 +30,11 @@ public class ListCommand implements Command {
         try {
             ListLinksResponse response = scrapperClient.getAllLinks(update.message().chat().id());
             if (response.size() == 0) {
-                return new SendMessage(update.message().chat().id(), "Ничего не отслеживается! Используй /track, чтобы добавить ссылки");
+                return new SendMessage(update.message().chat().id(),
+                        "Ничего не отслеживается! Используй /track, чтобы добавить ссылки");
             } else {
-                String[] links = response.items().stream().map(linkResponse -> linkResponse.url().toString()).toArray(String[]::new);
+                String[] links = response.items().stream()
+                        .map(linkResponse -> linkResponse.url().toString()).toArray(String[]::new);
                 return new SendMessage(update.message().chat().id(), String.join("\n", links));
             }
         } catch (WebClientResponseException ex) {

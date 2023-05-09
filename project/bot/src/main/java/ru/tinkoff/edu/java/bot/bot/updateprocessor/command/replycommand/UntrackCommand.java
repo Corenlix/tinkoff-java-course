@@ -36,12 +36,10 @@ public class UntrackCommand extends ReplyCommand {
         RemoveLinkRequest request = new RemoveLinkRequest(link);
         try {
             scrapperClient.removeLink(update.message().chat().id(), request);
-        }
-        catch (WebClientResponseException.NotFound ex) {
+        } catch (WebClientResponseException.NotFound ex) {
             log.error("Ссылка для удаления не отслеживается пользователем!", ex);
             return new SendMessage(update.message().chat().id(), "Ссылка не найдена :с");
-        }
-        catch (WebClientResponseException.BadRequest ex) {
+        } catch (WebClientResponseException.BadRequest ex) {
             log.error("Ошибка при добавлении ссылки в список отслеживаемых!", ex);
             return new SendMessage(update.message().chat().id(), "При удалении произошла ошибка :с");
         }

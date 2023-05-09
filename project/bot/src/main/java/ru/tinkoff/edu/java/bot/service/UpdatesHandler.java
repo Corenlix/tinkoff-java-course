@@ -13,7 +13,8 @@ public class UpdatesHandler {
 
     public void handleUpdate(LinkUpdate linkUpdate) {
         for (Long tgChatId : linkUpdate.tgChatIds()) {
-            telegramBot.execute(new SendMessage(tgChatId, String.format("Новые обновления для ссылки %s:\n %s", linkUpdate.url(), linkUpdate.description())));
+            telegramBot.execute(new SendMessage(tgChatId,
+                    String.format("Новые обновления для ссылки %s:\n %s", linkUpdate.url(), linkUpdate.description())));
         }
     }
 }

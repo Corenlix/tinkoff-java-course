@@ -1,5 +1,8 @@
 package ru.tinkoff.edu.java.scrapper.scheduler;
 
+import java.time.Duration;
+import java.time.OffsetDateTime;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -7,10 +10,6 @@ import ru.tinkoff.edu.java.scrapper.configuration.ApplicationConfig;
 import ru.tinkoff.edu.java.scrapper.domain.LinkEntity;
 import ru.tinkoff.edu.java.scrapper.service.LinkService;
 import ru.tinkoff.edu.java.scrapper.service.LinkUpdater;
-
-import java.time.Duration;
-import java.time.OffsetDateTime;
-import java.util.List;
 
 @Slf4j
 @Component

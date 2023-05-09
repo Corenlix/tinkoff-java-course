@@ -38,7 +38,8 @@ public class TrackCommand extends ReplyCommand {
             scrapperClient.addLink(update.message().chat().id(), request);
         } catch (WebClientResponseException ex) {
             log.error("Ошибка при добавлении ссылки в список отслеживаемых!", ex);
-            return new SendMessage(update.message().chat().id(), "При добавлении ссылки в список отслеживаемых произошла ошибка :с");
+            return new SendMessage(update.message().chat().id(),
+                    "При добавлении ссылки в список отслеживаемых произошла ошибка :с");
         }
 
         return new SendMessage(update.message().chat().id(), "Ссылка успешно добавлена в список отслеживаемых с:");

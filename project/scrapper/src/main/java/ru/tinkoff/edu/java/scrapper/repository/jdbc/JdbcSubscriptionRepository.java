@@ -1,15 +1,13 @@
 package ru.tinkoff.edu.java.scrapper.repository.jdbc;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.DataClassRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.stereotype.Repository;
 import ru.tinkoff.edu.java.scrapper.domain.ChatEntity;
 import ru.tinkoff.edu.java.scrapper.domain.LinkEntity;
 import ru.tinkoff.edu.java.scrapper.domain.SubscriptionEntity;
-
-import java.util.List;
 
 @RequiredArgsConstructor
 public class JdbcSubscriptionRepository {
@@ -26,7 +24,7 @@ public class JdbcSubscriptionRepository {
             where (select count(link_id) from subscription where link_id = link.id) = 0
             """;
     private final static String FIND_BY_LINK_ID_QUERY = """
-            select id 
+            select id
             from chat
             join subscription on chat.id = chat_id
             where link_id = ?

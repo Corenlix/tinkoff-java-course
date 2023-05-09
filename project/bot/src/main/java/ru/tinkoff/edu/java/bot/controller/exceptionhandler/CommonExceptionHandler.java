@@ -12,6 +12,7 @@ import ru.tinkoff.edu.java.bot.dto.ApiErrorResponse;
 
 @RestControllerAdvice
 public class CommonExceptionHandler {
+    private final static String ERROR_DESCRIPTION = "Некорректные параметры запроса";
 
     @ExceptionHandler(value = {
             MethodArgumentTypeMismatchException.class,
@@ -20,12 +21,12 @@ public class CommonExceptionHandler {
     })
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     public ApiErrorResponse badRequest(Exception ex) {
-        return new ApiErrorResponse("Некорректные параметры запроса", HttpStatus.BAD_REQUEST.toString(), ex);
+        return new ApiErrorResponse(ERROR_DESCRIPTION, HttpStatus.BAD_REQUEST.toString(), ex);
     }
 
     @ExceptionHandler(value = { Exception.class })
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     public ApiErrorResponse serverError(Exception ex) {
-        return new ApiErrorResponse("Некорректные параметры запроса", HttpStatus.BAD_REQUEST.toString(), ex);
+        return new ApiErrorResponse(ERROR_DESCRIPTION, HttpStatus.BAD_REQUEST.toString(), ex);
     }
 }

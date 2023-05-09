@@ -1,18 +1,16 @@
 package ru.tinkoff.edu.java.scrapper.repository.jdbc;
 
+import java.sql.PreparedStatement;
+import java.time.OffsetDateTime;
+import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.DataClassRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
-import org.springframework.stereotype.Repository;
 import ru.tinkoff.edu.java.scrapper.domain.LinkEntity;
-
-import java.sql.PreparedStatement;
-import java.time.OffsetDateTime;
-import java.util.List;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 public class JdbcLinkRepository {
@@ -23,7 +21,8 @@ public class JdbcLinkRepository {
     private final static String SAVE_QUERY = "update link set url=?, content_json=?::json, updated_at=? where id=?";
     private final static String REMOVE_QUERY = "delete from link where url = ?";
     private final static String FIND_ALL_QUERY = "select id, url, updated_at, content_json from link";
-    private final static String FIND_UPDATED_BEFORE_QUERY = "SELECT id, url, updated_at, content_json FROM link WHERE updated_at < ?";
+    private final static String FIND_UPDATED_BEFORE_QUERY =
+            "SELECT id, url, updated_at, content_json FROM link WHERE updated_at < ?";
     private final static String FIND_QUERY = """
             select id, url, updated_at, content_json
             from link\s
