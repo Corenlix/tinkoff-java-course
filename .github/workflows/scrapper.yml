@@ -60,3 +60,17 @@ jobs:
 
       - name: Push Docker image
         run: docker push ${{ env.REGISTRY }}/${{ steps.lowercase_actor.outputs.result }}/${{ env.IMAGE_NAME }}
+
+  checkstyle:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+      - name: Run checker
+        working-directory: ./project
+        run: mvn -pl scrapper -am checkstyle:check
