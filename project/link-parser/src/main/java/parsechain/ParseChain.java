@@ -1,11 +1,10 @@
 package parsechain;
 
-import parseprocessor.ParseProcessor;
-import parseresponse.ParseResponse;
-
 import java.net.URI;
 import java.util.LinkedList;
 import java.util.List;
+import parseprocessor.ParseProcessor;
+import parseresponse.ParseResponse;
 
 public final class ParseChain {
     private final List<ParseProcessor> processors = new LinkedList<>();
