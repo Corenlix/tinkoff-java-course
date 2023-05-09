@@ -3,7 +3,7 @@ name: Bot workflow
 on:
   push:
     paths:
-      - '.github/workflows/bot.yaml'
+      - '.github/workflows/bot.yml'
       - 'project/pom.xml'
       - 'project/bot/**'
 
