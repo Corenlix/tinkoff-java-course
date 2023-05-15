@@ -1,10 +1,9 @@
 package ru.tinkoff.edu.java.scrapper.service.linkupdater.linkhandler;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import parseresponse.ParseResponse;
-
-import java.util.List;
 
 @Component
 @RequiredArgsConstructor

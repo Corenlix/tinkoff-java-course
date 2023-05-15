@@ -1,6 +1,9 @@
 package ru.tinkoff.edu.java.scrapper.service.jpa;
 
 import jakarta.transaction.Transactional;
+import java.net.URI;
+import java.time.OffsetDateTime;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import ru.tinkoff.edu.java.scrapper.domain.LinkEntity;
 import ru.tinkoff.edu.java.scrapper.domain.jpa.JpaChatEntity;
@@ -12,10 +15,6 @@ import ru.tinkoff.edu.java.scrapper.repository.jpa.JpaChatRepository;
 import ru.tinkoff.edu.java.scrapper.repository.jpa.JpaLinkRepository;
 import ru.tinkoff.edu.java.scrapper.service.LinkService;
 import ru.tinkoff.edu.java.scrapper.service.LinkUpdater;
-
-import java.net.URI;
-import java.time.OffsetDateTime;
-import java.util.List;
 
 @RequiredArgsConstructor
 public class JpaLinkService implements LinkService {
@@ -50,7 +49,8 @@ public class JpaLinkService implements LinkService {
     @Override
     @Transactional
     public LinkEntity remove(Long chatId, URI url) {
-        JpaLinkEntity linkEntity = linkRepository.findByUrl(url.toString()).orElseThrow(() -> new LinkNotFoundException(url.toString()));
+        JpaLinkEntity linkEntity = linkRepository
+                .findByUrl(url.toString()).orElseThrow(() -> new LinkNotFoundException(url.toString()));
         JpaChatEntity chatEntity = chatRepository.findById(chatId).orElseThrow(() -> new ChatNotFoundException(chatId));
         linkEntity.setChats(chatRepository.findByLinksId(linkEntity.getId()));
         linkEntity.getChats().remove(chatEntity);
@@ -73,7 +73,8 @@ public class JpaLinkService implements LinkService {
     @Override
     @Transactional
     public void save(LinkEntity linkEntity) {
-        JpaLinkEntity jpaLinkEntity = linkRepository.findById(linkEntity.id()).orElseThrow(() -> new LinkNotFoundException(linkEntity.id()));
+        JpaLinkEntity jpaLinkEntity = linkRepository
+                .findById(linkEntity.id()).orElseThrow(() -> new LinkNotFoundException(linkEntity.id()));
         jpaLinkEntity.setUpdatedAt(linkEntity.updatedAt());
         jpaLinkEntity.setContentJson(linkEntity.contentJson());
         linkRepository.save(jpaLinkEntity);

@@ -1,13 +1,13 @@
 package parseprocessor;
 
-import parseresponse.StackOverflowResponse;
-import org.jetbrains.annotations.Nullable;
-
 import java.net.URI;
+import org.jetbrains.annotations.Nullable;
+import parseresponse.StackOverflowResponse;
 
 public final class StackOverflowProcessor implements ParseProcessor {
     private static final String STACKOVERFLOW_DOMAIN = "stackoverflow.com";
     private static final String QUESTIONS_SECTION = "questions";
+    private static final int PATH_SEGMENTS_COUNT = 4;
 
     @Override
     public StackOverflowResponse parse(URI link) {
@@ -25,7 +25,7 @@ public final class StackOverflowProcessor implements ParseProcessor {
     @Nullable
     private StackOverflowResponse extractDataFromUri(URI link) {
         String[] pathSegments = link.getPath().split("/");
-        if (pathSegments.length != 4 || !pathSegments[1].equals(QUESTIONS_SECTION)) {
+        if (pathSegments.length != PATH_SEGMENTS_COUNT || !pathSegments[1].equals(QUESTIONS_SECTION)) {
             return null;
         }
         long id = Long.parseLong(pathSegments[2]);

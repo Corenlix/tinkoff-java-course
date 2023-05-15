@@ -1,0 +1,76 @@
+name: Scrapper workflow
+
+on:
+  push:
+    paths:
+      - '.github/workflows/scrapper.yml'
+      - 'project/pom.xml'
+      - 'project/scrapper/**'
+      - 'project/migrations/**'
+      - 'project/link-parser/**'
+      - 'project/scrapper-jooq/**'
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: scrapper-app:latest
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Maven build JOOQ
+        working-directory: ./project
+        run: mvn package -pl scrapper-jooq -am
+
+      - name: Generate JOOQ
+        working-directory: ./project
+        run: java -jar scrapper-jooq/target/*.jar
+
+      - name: Maven build Scrapper
+        working-directory: ./project
+        run: mvn package -pl scrapper -am
+
+      - name: Lowercase actor
+        uses: actions/github-script@v6
+        id: lowercase_actor
+        with:
+          result-encoding: string
+          script: return '${{ github.actor }}'.toLowerCase()
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build Image
+        working-directory: ./project
+        run: docker build -t ${{ env.REGISTRY }}/${{ steps.lowercase_actor.outputs.result }}/${{ env.IMAGE_NAME }} . -f scrapper/Dockerfile
+
+      - name: Push Docker image
+        run: docker push ${{ env.REGISTRY }}/${{ steps.lowercase_actor.outputs.result }}/${{ env.IMAGE_NAME }}
+
+  checkstyle:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+      - name: Run checker
+        working-directory: ./project
+        run: mvn -pl scrapper -am checkstyle:check

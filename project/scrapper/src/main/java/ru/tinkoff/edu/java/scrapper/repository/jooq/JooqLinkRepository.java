@@ -1,15 +1,13 @@
 package ru.tinkoff.edu.java.scrapper.repository.jooq;
 
-import lombok.RequiredArgsConstructor;
-import org.jooq.DSLContext;
-import org.jooq.JSON;
-import org.springframework.stereotype.Repository;
-import ru.tinkoff.edu.java.scrapper.domain.jooq.tables.Link;
-import ru.tinkoff.edu.java.scrapper.domain.LinkEntity;
-
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Optional;
+import lombok.RequiredArgsConstructor;
+import org.jooq.DSLContext;
+import org.jooq.JSON;
+import ru.tinkoff.edu.java.scrapper.domain.LinkEntity;
+import ru.tinkoff.edu.java.scrapper.domain.jooq.tables.Link;
 
 @RequiredArgsConstructor
 public class JooqLinkRepository {

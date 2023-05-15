@@ -21,7 +21,9 @@ public class UpdatesController {
 
     @Operation(summary = "Отправить обновление", responses = {
             @ApiResponse(responseCode = "200", description = "Обновление обработано"),
-            @ApiResponse(responseCode = "400", description = "Некорректные параметры запроса", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ApiErrorResponse.class)) })})
+            @ApiResponse(responseCode = "400", description = "Некорректные параметры запроса",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ApiErrorResponse.class))})})
     @PostMapping
     public void addUpdate(@RequestBody LinkUpdate linkUpdate) {
         updatesHandler.handleUpdate(linkUpdate);

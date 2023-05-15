@@ -1,11 +1,10 @@
 package linkparser;
 
+import java.net.URI;
 import parsechain.ParseChain;
 import parseprocessor.GitHubProcessor;
 import parseprocessor.StackOverflowProcessor;
 import parseresponse.ParseResponse;
-
-import java.net.URI;
 
 public final class LinkParser {
     private final ParseChain parseChain;

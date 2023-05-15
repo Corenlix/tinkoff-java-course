@@ -1,22 +1,21 @@
 package ru.tinkoff.edu.java.scrapper.service.linkupdater.linkhandler.impl;
 
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import parseresponse.GitHubResponse;
 import parseresponse.ParseResponse;
+import ru.tinkoff.edu.java.scrapper.domain.linkcontent.GithubContent;
+import ru.tinkoff.edu.java.scrapper.domain.linkcontent.LinkContent;
 import ru.tinkoff.edu.java.scrapper.dto.UpdateMessage;
 import ru.tinkoff.edu.java.scrapper.dto.client.github.GitHubRepositoryResponse;
 import ru.tinkoff.edu.java.scrapper.httpclient.GitHubClient;
 import ru.tinkoff.edu.java.scrapper.service.linkupdater.linkhandler.LinkHandler;
 import ru.tinkoff.edu.java.scrapper.service.linkupdater.linkhandler.impl.linkupdatechecker.github.GithubLinksUpdateChecker;
-import ru.tinkoff.edu.java.scrapper.domain.linkcontent.GithubContent;
-import ru.tinkoff.edu.java.scrapper.domain.linkcontent.LinkContent;
-
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
@@ -33,7 +32,8 @@ public class GithubLinkHandler implements LinkHandler {
     @Override
     public LinkContent getContent(ParseResponse parseResponse) {
         GitHubResponse gitHubResponse = (GitHubResponse) parseResponse;
-        GitHubRepositoryResponse repository = gitHubClient.fetchRepository(gitHubResponse.user(), gitHubResponse.repository());
+        GitHubRepositoryResponse repository =
+                gitHubClient.fetchRepository(gitHubResponse.user(), gitHubResponse.repository());
         return getLinkContent(repository);
     }
 

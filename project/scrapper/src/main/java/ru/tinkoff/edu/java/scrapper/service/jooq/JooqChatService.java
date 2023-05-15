@@ -1,5 +1,6 @@
 package ru.tinkoff.edu.java.scrapper.service.jooq;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 import ru.tinkoff.edu.java.scrapper.domain.ChatEntity;
@@ -10,8 +11,6 @@ import ru.tinkoff.edu.java.scrapper.repository.jooq.JooqChatRepository;
 import ru.tinkoff.edu.java.scrapper.repository.jooq.JooqLinkRepository;
 import ru.tinkoff.edu.java.scrapper.repository.jooq.JooqSubscriptionRepository;
 import ru.tinkoff.edu.java.scrapper.service.ChatService;
-
-import java.util.List;
 
 @RequiredArgsConstructor
 public class JooqChatService implements ChatService {

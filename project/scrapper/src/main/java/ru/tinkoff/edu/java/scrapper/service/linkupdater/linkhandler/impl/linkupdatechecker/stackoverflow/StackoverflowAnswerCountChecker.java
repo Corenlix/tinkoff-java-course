@@ -1,8 +1,8 @@
 package ru.tinkoff.edu.java.scrapper.service.linkupdater.linkhandler.impl.linkupdatechecker.stackoverflow;
 
 import org.springframework.stereotype.Component;
-import ru.tinkoff.edu.java.scrapper.dto.UpdateMessage;
 import ru.tinkoff.edu.java.scrapper.domain.linkcontent.StackoverflowContent;
+import ru.tinkoff.edu.java.scrapper.dto.UpdateMessage;
 
 @Component
 public class StackoverflowAnswerCountChecker implements StackOverflowUpdateChecker {

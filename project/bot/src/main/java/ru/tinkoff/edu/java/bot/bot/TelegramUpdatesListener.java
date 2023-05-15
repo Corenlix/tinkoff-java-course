@@ -5,17 +5,18 @@ import com.pengrad.telegrambot.UpdatesListener;
 import com.pengrad.telegrambot.model.BotCommand;
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.SetMyCommands;
+import java.util.List;
 import org.springframework.stereotype.Service;
 import ru.tinkoff.edu.java.bot.bot.updateprocessor.UpdateProcessorsChain;
 import ru.tinkoff.edu.java.bot.bot.updateprocessor.command.Command;
-
-import java.util.List;
 
 @Service
 public class TelegramUpdatesListener implements UpdatesListener {
     private final UpdateProcessorsChain updateProcessorsChain;
 
-    public TelegramUpdatesListener(TelegramBot telegramBot, List<Command> commands, UpdateProcessorsChain updateProcessorsChain) {
+    public TelegramUpdatesListener(TelegramBot telegramBot,
+                                   List<Command> commands,
+                                   UpdateProcessorsChain updateProcessorsChain) {
         this.updateProcessorsChain = updateProcessorsChain;
         telegramBot.setUpdatesListener(this);
         telegramBot.execute(buildSetCommandsRequest(commands));

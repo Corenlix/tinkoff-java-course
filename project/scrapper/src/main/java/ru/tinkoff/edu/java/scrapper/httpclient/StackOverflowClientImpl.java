@@ -1,13 +1,12 @@
 package ru.tinkoff.edu.java.scrapper.httpclient;
 
+import java.util.Arrays;
+import java.util.stream.Stream;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.reactive.function.client.WebClient;
 import ru.tinkoff.edu.java.scrapper.dto.client.stackexchange.StackExchangeQuestionResponse;
 import ru.tinkoff.edu.java.scrapper.dto.client.stackexchange.StackExchangeQuestionsResponse;
-
-import java.util.Arrays;
-import java.util.stream.Stream;
 
 @Builder
 @RequiredArgsConstructor

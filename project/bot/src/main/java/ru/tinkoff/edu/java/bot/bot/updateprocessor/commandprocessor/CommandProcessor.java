@@ -2,15 +2,14 @@ package ru.tinkoff.edu.java.bot.bot.updateprocessor.commandprocessor;
 
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.SendMessage;
-import org.springframework.core.annotation.Order;
-import org.springframework.stereotype.Component;
-import ru.tinkoff.edu.java.bot.bot.updateprocessor.UpdateProcessor;
-import ru.tinkoff.edu.java.bot.bot.updateprocessor.command.Command;
-
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import org.springframework.core.annotation.Order;
+import org.springframework.stereotype.Component;
+import ru.tinkoff.edu.java.bot.bot.updateprocessor.UpdateProcessor;
+import ru.tinkoff.edu.java.bot.bot.updateprocessor.command.Command;
 
 @Component
 @Order(1)
@@ -22,8 +21,9 @@ public class CommandProcessor implements UpdateProcessor {
     }
 
     public Optional<SendMessage> tryProcess(Update update) {
-        if(!isCommand(update))
+        if (!isCommand(update)) {
             return Optional.empty();
+        }
 
         Command command = commands.get(update.message().text());
         SendMessage message = command != null ? command.process(update) : getUnknownCommandMessage(update);

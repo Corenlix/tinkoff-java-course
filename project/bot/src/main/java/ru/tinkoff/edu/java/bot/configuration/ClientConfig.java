@@ -14,7 +14,9 @@ public class ClientConfig {
         WebClient client = WebClient.builder()
                 .baseUrl(applicationConfig.scrapperPath().toString())
                 .build();
-        HttpServiceProxyFactory factory = HttpServiceProxyFactory.builder(WebClientAdapter.forClient(client)).build();
+        HttpServiceProxyFactory factory = HttpServiceProxyFactory
+                .builder(WebClientAdapter.forClient(client))
+                .build();
         return factory.createClient(ScrapperClient.class);
     }
 }
