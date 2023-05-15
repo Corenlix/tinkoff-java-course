@@ -13,6 +13,7 @@ public record ApplicationConfig(
         @NotNull URI scrapperPath,
         @NotNull String rabbitQueueName,
         @NotNull String rabbitRoutingKey,
-        @NotNull String rabbitExchangeName
+        @NotNull String rabbitExchangeName,
+        @NotNull String micrometerProcessedMessagesCounter
 ) {
 }
